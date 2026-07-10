@@ -25,25 +25,23 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  const isSolid = !isHomePage || isScrolled;
-  const navBg = isSolid ? '#2C1A12' : 'transparent';
-  const navTextColor = isSolid ? '#F4E8D0' : '#2C1A12';
-  const navBorderColor = isSolid ? 'rgba(244, 232, 208, 0.15)' : 'transparent';
-  const logoColor = isSolid ? '#F4E8D0' : '#2C1A12';
-  const goldDotColor = '#C89B3C';
+  const navBg = 'var(--bg-primary)';
+  const navTextColor = 'var(--text-primary)';
+  const navBorderColor = 'var(--border-subtle)';
+  const logoColor = 'var(--text-primary)';
+  const goldDotColor = 'var(--text-primary)';
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 transition-all duration-300 border-b select-none"
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 md:px-12 border-b select-none"
       style={{
         backgroundColor: navBg,
         borderColor: navBorderColor,
-        boxShadow: isScrolled && isSolid ? '0 10px 30px rgba(0,0,0,0.15)' : 'none',
       }}
     >
       {/* Logo */}
       <Link to="/" className="text-xl md:text-2xl font-bold tracking-[0.05em] font-kingston">
-        <span style={{ color: logoColor }}>HARAYA</span>
+        <span style={{ color: logoColor }}>ADA</span>
         <span style={{ color: goldDotColor }}>.</span>
       </Link>
 
@@ -53,7 +51,7 @@ export default function Navbar() {
           <li>
             <Link
               to="/"
-              className="transition-colors duration-200 hover:text-[var(--gold)]"
+              className="transition-colors duration-200 hover:text-[var(--text-secondary)]"
               style={{ color: navTextColor }}
             >
               Home
@@ -62,7 +60,7 @@ export default function Navbar() {
           <li>
             <Link
               to="/#categories"
-              className="transition-colors duration-200 hover:text-[var(--gold)]"
+              className="transition-colors duration-200 hover:text-[var(--text-secondary)]"
               style={{ color: navTextColor }}
             >
               Gallery
@@ -71,7 +69,7 @@ export default function Navbar() {
           <li>
             <Link
               to="/about"
-              className="transition-colors duration-200 hover:text-[var(--gold)]"
+              className="transition-colors duration-200 hover:text-[var(--text-secondary)]"
               style={{ color: navTextColor }}
             >
               About
@@ -83,15 +81,15 @@ export default function Navbar() {
       {/* Explore Button */}
       <Link
         to="/#categories"
-        className="hidden sm:inline-block font-sans font-semibold text-[11px] md:text-xs uppercase tracking-[0.06em] border py-2 px-5 transition-all duration-200"
+        className="hidden sm:inline-block font-sans font-semibold text-[11px] md:text-xs uppercase tracking-[0.06em] border py-2 px-5"
         style={{
           color: navTextColor,
-          borderColor: isSolid ? 'rgba(244, 232, 208, 0.4)' : '#2C1A12',
+          borderColor: navBorderColor,
           backgroundColor: 'transparent',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = isSolid ? '#F4E8D0' : '#2C1A12';
-          e.currentTarget.style.color = isSolid ? '#2C1A12' : '#F4E8D0';
+          e.currentTarget.style.backgroundColor = 'var(--text-primary)';
+          e.currentTarget.style.color = 'var(--bg-primary)';
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.backgroundColor = 'transparent';

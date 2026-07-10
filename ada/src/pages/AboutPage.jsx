@@ -70,16 +70,11 @@ export default function AboutPage() {
           All About
         </span>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative z-10 px-6 animate-fade-in"
-        >
-          <span className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.2em] text-theme-primary font-kingston uppercase">
-            Haraya
+        <div className="relative z-10 px-6">
+          <span className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[0.2em] text-theme-primary uppercase">
+            ADA
           </span>
-        </motion.div>
+        </div>
       </header>
 
       {/* Content wrapper */}
@@ -97,7 +92,7 @@ export default function AboutPage() {
             containerClassName="mx-auto text-center"
             textClassName="!text-sm md:!text-base font-heading font-semibold text-theme-primary text-center tracking-wide"
           >
-            {"Haraya Curatorial Guild - The official Curatorial Body of BS BIO 3B [Group 1]"}
+            {"ADA Curatorial Guild - The official Curatorial Body of BS BIO 3B [Group 1]"}
           </ScrollReveal>
 
 
@@ -194,7 +189,7 @@ export default function AboutPage() {
             containerClassName="mx-auto text-justify pt-8 border-t border-theme-subtle"
             textClassName="!text-sm font-medium leading-relaxed text-theme-primary font-sans text-justify"
           >
-            {"At its core, the mission of Haraya remains to create an inclusive virtual space that celebrates artistic expression across all mediums, making art accessible, dialogic, and interactive for everyone."}
+            {"At its core, the mission of ADA remains to create an inclusive virtual space that celebrates artistic expression across all mediums, making art accessible, dialogic, and interactive for everyone."}
           </ScrollReveal>
         </div>
       </div>

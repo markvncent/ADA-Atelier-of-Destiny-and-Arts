@@ -183,45 +183,31 @@ export default function CategoryPage() {
   return (
     <div className="relative">
       {/* Category Header */}
-      <section className="sticky top-0 z-0 overflow-hidden w-full pt-32 pb-16 md:pt-44 md:pb-24">
-        {/* Background image overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-100"
-          style={{ backgroundImage: "url('/category-header-bg.png')" }}
-        />
-
-        {/* Gradient overlay to fade from top (navbar background) and to the page body at the bottom */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(10, 7, 5, 0.6) 0%, transparent 25%, transparent 60%, var(--bg-primary) 100%)',
-          }}
-        />
-
+      <section className="relative z-0 w-full pt-32 pb-16 md:pt-44 md:pb-24 border-b" style={{ backgroundColor: 'var(--bg-surface)' }}>
         <div className="relative z-10 mx-auto max-w-7xl px-6 text-left">
           {(() => {
             const { main, sub } = parseCategoryName(category.name);
             return (
               <div className="mb-6 flex flex-col items-start gap-2">
-                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal leading-none font-kingston tracking-wide text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+                <h1 className="text-5xl sm:text-6xl md:text-7.5xl lg:text-8.5xl font-bold leading-none tracking-wide text-theme-primary">
                   {main}
                 </h1>
                 {sub && (
-                  <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-heading font-semibold tracking-wider text-neutral-400 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                  <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wider text-theme-secondary">
                     {sub}
                   </span>
                 )}
               </div>
             );
           })()}
-          <p className="max-w-3xl text-base md:text-lg leading-relaxed text-neutral-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] whitespace-pre-line">
+          <p className="max-w-3xl text-base md:text-lg leading-relaxed text-theme-secondary whitespace-pre-line">
             {dbCategory?.expanded_description || category?.expanded_description || category?.description}
           </p>
         </div>
       </section>
 
       <div 
-        className="relative z-10 rounded-t-2xl md:rounded-t-3xl shadow-[0_-15px_40px_rgba(0,0,0,0.9)] overflow-hidden"
+        className="relative z-10"
         style={{ backgroundColor: 'var(--bg-primary)' }}
       >
         {/* Artworks Display Section */}

@@ -32,32 +32,32 @@ export default function ArtworkCard({ artwork, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden rounded-2xl border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-neutral-500/10"
+      className="group relative cursor-pointer overflow-hidden border border-black"
       style={{
         backgroundColor: 'var(--bg-surface)',
         borderColor: 'var(--border-subtle)',
       }}
     >
       {/* Media Preview Container */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-950 flex items-center justify-center">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100 flex items-center justify-center border-b border-black">
         {displayImage ? (
           <img
             src={displayImage}
             alt={title}
-            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="h-full w-full object-cover"
             loading="lazy"
           />
         ) : (
           <div 
-            className="w-full h-full flex flex-col items-center justify-center gap-3 transition-colors duration-300 group-hover:bg-neutral-900"
+            className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-100"
             style={{ 
-              background: 'linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-hover) 100%)',
+              backgroundColor: 'var(--bg-surface)',
             }}
           >
             {IconComponent ? (
               <IconComponent 
-                className="w-12 h-12 transition-transform duration-500 group-hover:scale-110" 
-                style={{ color: 'var(--accent-gold)' }}
+                className="w-12 h-12" 
+                style={{ color: 'var(--text-primary)' }}
                 strokeWidth={1.5}
               />
             ) : (
@@ -68,18 +68,16 @@ export default function ArtworkCard({ artwork, onClick }) {
             </span>
           </div>
         )}
-        {/* Ambient Dark Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent pointer-events-none" />
         
         {/* Media type icon badge */}
-        <span className="absolute top-3 left-3 bg-neutral-900/80 backdrop-blur-md text-xs py-1 px-2.5 rounded-full border border-white/5 flex items-center gap-1.5 text-white">
+        <span className="absolute top-3 left-3 bg-white text-black text-xs py-1 px-2.5 border border-black flex items-center gap-1.5">
           <span>{typeIcons[media_type] || '✨'}</span>
           <span className="capitalize text-[10px] tracking-wide font-medium">{media_type}</span>
         </span>
 
         {/* Fallback Preview Tag */}
         {is_fallback && (
-          <span className="absolute top-3 right-3 bg-neutral-500/20 backdrop-blur-md text-[10px] font-bold text-neutral-400 border border-neutral-500/30 px-2 py-0.5 rounded-full uppercase tracking-wider">
+          <span className="absolute top-3 right-3 bg-white text-[10px] font-bold text-black border border-black px-2 py-0.5 uppercase tracking-wider">
             Preview
           </span>
         )}
@@ -99,7 +97,7 @@ export default function ArtworkCard({ artwork, onClick }) {
         {artwork.subcategory && (
           <div
             className="text-[10px] tracking-wider uppercase mb-3 select-none font-semibold"
-            style={{ color: 'var(--accent-gold)', fontVariant: 'small-caps' }}
+            style={{ color: 'var(--text-primary)' }}
           >
             {artwork.subcategory}
           </div>
@@ -108,7 +106,7 @@ export default function ArtworkCard({ artwork, onClick }) {
         {/* Card Footer: Rating stars & Details */}
         <div className="flex items-center justify-between border-t pt-4" style={{ borderColor: 'var(--border-subtle)' }}>
           <div className="flex items-center gap-1.5">
-            <span className="text-neutral-400 text-sm">★</span>
+            <span className="text-black text-sm">★</span>
             <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
               {avgRating > 0 ? avgRating : 'No ratings'}
             </span>
@@ -119,8 +117,8 @@ export default function ArtworkCard({ artwork, onClick }) {
             )}
           </div>
           <span
-            className="text-xs font-medium flex items-center gap-1 group-hover:translate-x-0.5 transition-transform duration-300"
-            style={{ color: 'var(--accent-gold)' }}
+            className="text-xs font-medium flex items-center gap-1 group-hover:underline"
+            style={{ color: 'var(--text-primary)' }}
           >
             Open Exhibition
             <span className="text-xs">→</span>
