@@ -1,0 +1,103 @@
+/**
+ * Static category configuration for the landing page.
+ * Each entry maps to one of the 8 "door" cards.
+ *
+ * `slug` is used for URL routing (/category/:slug).
+ * `icon` is an emoji used as a visual placeholder until cover images are set.
+ * `gradient` defines the Tailwind gradient classes for each door card.
+ */
+const categories = [
+  {
+    id: 'd4a4b4c4-4444-4444-a444-444444444444',
+    slug: 'photography',
+    name: 'Photography',
+    description: 'Frozen light and everyday moments, arranged for a second look.',
+    expanded_description: 'Frozen light and everyday moments, arranged for a second look. Each photo captures a specific interaction between light, shadow, and subject, inviting the viewer to slow down and observe details that are usually lost in the speed of daily life.',
+    icon: '📷',
+    gradient: 'from-amber-600/60 to-brown/60',
+    mediaType: 'image',
+    hryRef: 'HRY–01',
+    refName: 'Photography',
+    iconText: 'Ph',
+  },
+  {
+    id: 'd3a3b3c3-3333-4333-a333-333333333333',
+    slug: 'digital-art',
+    name: 'Digital Art',
+    description: 'Work built pixel by pixel — illustration, concept art, and beyond.',
+    expanded_description: 'Works built pixel by pixel, exploring new software, generative modeling, and digital illustration. This space bridges the gap between technology and pure visual imagination, displaying concept art, illustration, and digital paintings.',
+    icon: '💻',
+    gradient: 'from-forest/60 to-brown/60',
+    mediaType: 'image',
+    hryRef: 'HRY–02',
+    refName: 'Digital Art',
+    iconText: 'Dg',
+  },
+  {
+    id: 'd1a1b1c1-1111-4111-a111-111111111111',
+    slug: 'traditional-painting',
+    name: 'Traditional & Painting',
+    description: "Brush, canvas, and pigment — the archive's oldest language.",
+    expanded_description: "Brush, canvas, and pigment — the archive's oldest language. Featuring traditional works such as paintings, drawings, and sketches that explore human emotion and history through organic textures, line, and composition.",
+    icon: '🎨',
+    gradient: 'from-terracotta/60 to-brown/60',
+    mediaType: 'image',
+    hryRef: 'HRY–03',
+    refName: 'Painting',
+    iconText: 'Pt',
+  },
+  {
+    id: 'd5a5b5c5-5555-4555-a555-555555555555',
+    slug: 'sculpture-3d',
+    name: 'Sculpture & 3D',
+    description: 'Form given weight — carved, modeled, or rendered in space.',
+    expanded_description: 'Form given weight — carved, modeled, rendered, or printed in three dimensions. This collection highlights physical and digital installations, scale architectural models, and spatial explorations using sustainable and mixed materials.',
+    icon: '📐',
+    gradient: 'from-gold/60 to-brown/60',
+    mediaType: 'sculpture',
+    hryRef: 'HRY–04',
+    refName: 'Sculpture',
+    iconText: 'Sc',
+  },
+  {
+    id: 'd2a2b2c2-2222-4222-a222-222222222222',
+    slug: 'music-audio',
+    name: 'Music & Audio',
+    description: 'Compositions and recordings meant to be heard, not just seen.',
+    expanded_description: 'Compositions, audio tracks, and acoustic recordings meant to be heard. This room serves as a sonic sanctuary, featuring original songs and soundtracks that reflect on personal journeys, social issues, and musical experimentation.',
+    icon: '🔊',
+    gradient: 'from-forest/60 to-gold/60',
+    mediaType: 'audio',
+    hryRef: 'HRY–05',
+    refName: 'Audio',
+    iconText: 'Mu',
+  },
+  {
+    id: 'd6a6b6c6-6666-4666-a666-666666666666',
+    slug: 'film-video',
+    name: 'Film & Video',
+    description: 'Motion, edit, and sound design — short works with a beginning and end.',
+    expanded_description: 'Motion, edit, and sound design — short video presentations, films, animations, and visual storytelling. Through dynamic visual frames and timing, this section brings stories and concepts to life.',
+    icon: '🎬',
+    gradient: 'from-terracotta/60 to-gold/60',
+    mediaType: 'video',
+    hryRef: 'HRY–06',
+    refName: 'Film',
+    iconText: 'Fl',
+  },
+  {
+    id: 'd7a7b7c7-7777-4777-a777-777777777777',
+    slug: 'writing-poetry',
+    name: 'Writing & Poetry',
+    description: 'Words kept for their own sake — verse, prose, and everything between.',
+    expanded_description: 'Words kept for their own sake — verse, prose, poetry, and storytelling. It serves as a tribute to written reflection, narrative exploration, and collaborative ideas captured in writing.',
+    icon: '✍️',
+    gradient: 'from-brown-soft/60 to-brown/60',
+    mediaType: 'text',
+    hryRef: 'HRY–07',
+    refName: 'Writing',
+    iconText: 'Wr',
+  },
+];
+
+export default categories;

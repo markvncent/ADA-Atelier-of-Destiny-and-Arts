@@ -1,0 +1,7 @@
+{
+  "outputDirectory": "silid-museo/dist",
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
