@@ -1,10 +1,10 @@
 {
-  "name": "silid-museo-root",
+  "name": "ADA-root",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd silid-museo && npm install && npm run build",
-    "dev": "cd silid-museo && npm run dev"
+    "build": "cd ada && npm install && npm run build",
+    "dev": "cd ada && npm run dev"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.110.1",
