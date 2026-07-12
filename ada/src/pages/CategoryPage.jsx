@@ -182,7 +182,7 @@ export default function CategoryPage() {
         background: `
           radial-gradient(ellipse 60% 50% at 30% 0%, rgba(203,212,169,0.35), transparent 60%),
           radial-gradient(ellipse 50% 40% at 80% 10%, rgba(221,167,133,0.25), transparent 60%),
-          var(--parchment)
+          transparent
         `,
       }}>
         <FairyDust count={8} />
@@ -241,7 +241,7 @@ export default function CategoryPage() {
         </div>
       </section>
 
-      <div style={{ position: 'relative', zIndex: 10, background: 'var(--cream)' }}>
+      <div className="category-body">
         {/* Artworks Display Section */}
         <section className="section">
           <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '0 24px' }}>

@@ -6,6 +6,7 @@ import FairyDust from '../components/ui/FairyDust.jsx';
 import ScrollRevealSection from '../components/ui/ScrollRevealSection.jsx';
 import { Carousel } from '../components/ui/retro-testimonial.jsx';
 import { motion } from 'framer-motion';
+import ConstellationBackground from '../components/ui/ConstellationBackground.jsx';
 
 const MotionLink = motion(Link);
 
@@ -277,6 +278,7 @@ export default function HomePage() {
 
       {/* ═══════ ATELIERS — Category Door Cards ═══════ */}
       <section className="archive-section" id="categories" style={{ position: 'relative', overflow: 'hidden' }}>
+        <ConstellationBackground />
         {/* Left background watermark constellation */}
         <svg width="240" height="340" viewBox="0 0 240 340" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', left: '2%', top: '15%', opacity: 0.08, pointerEvents: 'none', zIndex: 1 }} className="hidden lg:block">
           <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none"/>
@@ -344,6 +346,7 @@ export default function HomePage() {
 
       {/* ═══════ ABOUT TEASER ═══════ */}
       <section className="section" id="about-teaser">
+        <FairyDust count={16} />
         <div className="container">
           <ScrollRevealSection>
             <div style={{
@@ -379,18 +382,6 @@ export default function HomePage() {
               <Link to="/about" className="btn btn-ghost btn-sm">
                 Read Our Full Story
               </Link>
-            </div>
-          </ScrollRevealSection>
-        </div>
-      </section>
-
-      {/* ═══════ CTA BANNER ═══════ */}
-      <section className="section">
-        <div className="container">
-          <ScrollRevealSection>
-            <div className="cta-banner">
-              <h2>Step through the door.</h2>
-              <a href="#categories" className="btn btn-primary">Begin Your Visit</a>
             </div>
           </ScrollRevealSection>
         </div>

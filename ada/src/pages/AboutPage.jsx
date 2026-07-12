@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import ScrollReveal from '../components/ui/ScrollReveal';
 import ScrollRevealSection from '../components/ui/ScrollRevealSection';
+import FairyDust from '../components/ui/FairyDust.jsx';
 
 export default function AboutPage() {
   const scrollContainerRef = useRef(null);
@@ -39,7 +40,8 @@ export default function AboutPage() {
   ];
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
+    <div className="about-page-body" style={{ position: 'relative', minHeight: '100vh' }}>
+      <FairyDust count={28} />
       {/* Decorative gradient background */}
       <div style={{
         position: 'absolute',

@@ -82,16 +82,37 @@ const Carousel = ({ items, initialScroll = 0 }) => {
 
 	return (
 		<div className="relative w-full mt-10">
+			{/* Left Fade Overlay */}
+			<div 
+				style={{
+					position: 'absolute',
+					top: 0,
+					bottom: 0,
+					left: 0,
+					width: '100px',
+					background: 'linear-gradient(to right, var(--parchment) 10%, rgba(246, 239, 226, 0) 100%)',
+					zIndex: 20,
+					pointerEvents: 'none',
+				}}
+			/>
+			{/* Right Fade Overlay */}
+			<div 
+				style={{
+					position: 'absolute',
+					top: 0,
+					bottom: 0,
+					right: 0,
+					width: '100px',
+					background: 'linear-gradient(to left, var(--parchment) 10%, rgba(246, 239, 226, 0) 100%)',
+					zIndex: 20,
+					pointerEvents: 'none',
+				}}
+			/>
 			<div
 				className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth [scrollbar-width:none] py-5"
 				ref={carouselRef}
 				onScroll={checkScrollability}
 			>
-				<div
-					className={cn(
-						"absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
-					)}
-				/>
 				<div
 					className={cn(
 						"flex flex-row justify-start gap-4 pl-3",

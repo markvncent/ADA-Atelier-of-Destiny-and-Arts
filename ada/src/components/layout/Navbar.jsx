@@ -44,8 +44,14 @@ export default function Navbar() {
     return currentPath === item.to;
   };
 
+  const isHomePage = currentPath === '/';
+
   return (
-    <nav className={`site-nav ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`site-nav ${
+      mobileOpen 
+        ? 'scrolled' 
+        : (isHomePage ? (isScrolled ? 'scrolled' : 'transparent') : 'scrolled')
+    }`}>
       <div className="nav-inner">
         {/* Brand Mark — Stained Glass Door Window */}
         <Link to="/" className="brandmark">
