@@ -34,7 +34,6 @@ useEffect(() => {
 
   const loadComments = async () => {
     try {
-      // Always merge Supabase comments + local mock comments
       let dbComments = [];
       if (!is_fallback) {
         try {
@@ -53,6 +52,7 @@ useEffect(() => {
       console.error(err);
     }
   };
+
   const loadRatingSummary = async () => {
     if (is_fallback) return;
     try {
@@ -72,7 +72,6 @@ useEffect(() => {
     try {
       if (!is_fallback) {
         try {
-          // Generate or load voter token
           let voterToken = localStorage.getItem('voter_token');
           if (!voterToken) {
             voterToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
@@ -84,7 +83,6 @@ useEffect(() => {
         }
       }
 
-      // Save locally
       const localVotes = JSON.parse(localStorage.getItem('gallery_votes') || '{}');
       localVotes[id] = score;
       localStorage.setItem('gallery_votes', JSON.stringify(localVotes));
@@ -93,9 +91,7 @@ useEffect(() => {
       setVotedScore(score);
       setRating(score);
 
-      // Trigger update of ratings summary on parent component
       if (onUpdateArtwork) {
-        // Fetch new averages if DB-backed
         if (!is_fallback) {
           try {
             const summary = await getAverageRating(id);
@@ -144,7 +140,6 @@ useEffect(() => {
       if (!is_fallback) {
         try {
           await submitArtworkFeedback(id, newComment.trim());
-          // Reload from db to get official record
           loadComments();
           setNewComment('');
           return;
@@ -153,7 +148,6 @@ useEffect(() => {
         }
       }
 
-      // Save locally as fallback/preview comment
       const localComments = JSON.parse(localStorage.getItem(`gallery_comments_${id}`) || '[]');
       localComments.unshift(commentObject);
       localStorage.setItem(`gallery_comments_${id}`, JSON.stringify(localComments));
@@ -168,60 +162,171 @@ useEffect(() => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 md:p-6 backdrop-blur-sm animate-fade-in">
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'rgba(58,46,56,0.65)',
+        padding: '16px',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
+        animation: 'fadeIn 0.3s ease-out',
+      }}
+    >
       {/* Modal Container */}
-      <div 
-        className="relative flex h-full max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border bg-neutral-950 shadow-2xl md:flex-row"
-        style={{ borderColor: 'var(--border-subtle)' }}
+      <div
+        className="fairy-modal-container"
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          maxHeight: '90vh',
+          width: '100%',
+          maxWidth: '1000px',
+          overflow: 'hidden',
+          borderRadius: '22px',
+          border: '1px solid var(--line)',
+          background: 'var(--cream)',
+          boxShadow: '0 30px 60px -20px rgba(58,46,56,0.4)',
+        }}
       >
+        {/* Responsive layout: column on mobile, row on desktop */}
+        <style>{`
+          @media (min-width: 768px) {
+            .fairy-modal-container { flex-direction: row !important; }
+            .fairy-modal-media { border-bottom: none !important; border-right: 1px solid var(--line) !important; }
+            .fairy-modal-sidebar { max-width: 400px !important; }
+          }
+        `}</style>
+
         {/* Close Button */}
         <button
-        type="button"
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-neutral-400 hover:text-white hover:bg-black/95 transition-all duration-300 border border-white/5"
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            zIndex: 50,
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '50%',
+            background: 'var(--cream)',
+            border: '1px solid var(--line)',
+            color: 'var(--ink-soft)',
+            cursor: 'pointer',
+            transition: 'background 0.25s, color 0.25s',
+            fontSize: '1.1rem',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'var(--mauve)';
+            e.currentTarget.style.color = 'var(--cream)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'var(--cream)';
+            e.currentTarget.style.color = 'var(--ink-soft)';
+          }}
         >
-          <span className="text-xl">✕</span>
+          ✕
         </button>
 
         {/* Left Side: Media Display */}
-        <div className="flex flex-1 items-center justify-center bg-neutral-900/40 p-6 md:p-8 border-b md:border-b-0 md:border-r" style={{ borderColor: 'var(--border-subtle)' }}>
+        <div
+          className="fairy-modal-media"
+          style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px',
+            background: 'var(--parchment)',
+            borderBottom: '1px solid var(--line)',
+            minHeight: '280px',
+          }}
+        >
           <MediaPlayer mediaUrl={media_url} mediaType={media_type} title={title} thumbnailUrl={thumbnail_url} />
         </div>
 
         {/* Right Side: Info & Interactions */}
-        <div className="flex w-full flex-col md:w-[400px] h-full overflow-y-auto p-6 md:p-8 bg-neutral-950">
+        <div
+          className="fairy-modal-sidebar"
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            overflowY: 'auto',
+            padding: '28px',
+            background: 'var(--cream)',
+          }}
+        >
           {/* Header */}
-          <div className="mb-6 mt-4">
-            <h2 className="text-2xl font-bold mb-3 tracking-tight" style={{ color: 'var(--text-primary)' }}>
+          <div style={{ marginBottom: '24px', marginTop: '16px' }}>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: '1.5rem',
+              fontWeight: 700,
+              color: 'var(--ink)',
+              marginBottom: '10px',
+              lineHeight: 1.2,
+            }}>
               {title}
             </h2>
-            <p className="text-sm leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-muted)' }}>
+            <p style={{
+              fontSize: '0.85rem',
+              lineHeight: 1.7,
+              color: 'var(--ink-soft)',
+              whiteSpace: 'pre-wrap',
+            }}>
               {description}
             </p>
           </div>
 
           {/* Rating Section */}
-          <div className="mb-6 p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
-            <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>
+          <div style={{
+            marginBottom: '24px',
+            padding: '18px',
+            borderRadius: '16px',
+            border: '1px solid var(--line)',
+            background: 'var(--parchment)',
+          }}>
+            <h3 style={{
+              fontSize: '0.82rem',
+              fontWeight: 600,
+              color: 'var(--ink)',
+              marginBottom: '10px',
+              fontFamily: "'Poppins', sans-serif",
+            }}>
               {hasVoted ? 'Your Rating' : 'Rate this Piece'}
             </h3>
             
-            <div className="flex items-center gap-2">
-              {/* Star Rating Selector */}
-              <div className="flex gap-1">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {/* Star Rating */}
+              <div style={{ display: 'flex', gap: '4px' }}>
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
-                  type ="button"
+                    type="button"
                     key={star}
                     disabled={hasVoted}
                     onMouseEnter={() => !hasVoted && setHoverRating(star)}
                     onMouseLeave={() => !hasVoted && setHoverRating(0)}
                     onClick={() => handleRatingSubmit(star)}
-                    className={`text-2xl transition-all duration-200 ${
-                      star <= (hoverRating || rating)
-                        ? 'text-white scale-110'
-                        : 'text-neutral-700 hover:text-neutral-500'
-                    } ${hasVoted ? 'cursor-default' : 'cursor-pointer'}`}
+                    style={{
+                      fontSize: '1.5rem',
+                      background: 'none',
+                      border: 'none',
+                      cursor: hasVoted ? 'default' : 'pointer',
+                      color: star <= (hoverRating || rating) ? 'var(--gold)' : 'var(--line)',
+                      transition: 'color 0.2s, transform 0.2s',
+                      transform: star <= (hoverRating || rating) ? 'scale(1.1)' : 'scale(1)',
+                      padding: '0 2px',
+                    }}
                   >
                     ★
                   </button>
@@ -229,52 +334,83 @@ useEffect(() => {
               </div>
               
               {hasVoted && (
-                <span className="text-xs font-semibold px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
+                <span style={{
+                  fontSize: '0.7rem',
+                  fontWeight: 600,
+                  padding: '3px 10px',
+                  background: 'rgba(166,179,123,0.15)',
+                  color: 'var(--sage-deep)',
+                  borderRadius: '999px',
+                  border: '1px solid rgba(166,179,123,0.3)',
+                }}>
                   Voted {votedScore}/5
                 </span>
               )}
             </div>
             
-            {/* Average Rating details */}
-            <div className="mt-3 flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+            {/* Average */}
+            <div style={{
+              marginTop: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '0.75rem',
+              color: 'var(--ink-soft)',
+            }}>
               <span>Average:</span>
-              <span className="font-semibold text-white">
+              <span style={{ fontWeight: 600, color: 'var(--ink)' }}>
                 {artwork.artwork_ratings_summary?.average_rating || 0} / 5
               </span>
               <span>•</span>
-              <span>
-                {artwork.artwork_ratings_summary?.rating_count || 0} rating(s)
-              </span>
+              <span>{artwork.artwork_ratings_summary?.rating_count || 0} rating(s)</span>
             </div>
           </div>
 
-          {/* Feedback/Comments Section */}
-          <div className="flex-1 flex flex-col min-h-[250px]">
-            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>
+          {/* Comments Section */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: '200px' }}>
+            <h3 style={{
+              fontSize: '0.82rem',
+              fontWeight: 600,
+              color: 'var(--ink)',
+              marginBottom: '12px',
+              fontFamily: "'Poppins', sans-serif",
+            }}>
               Feedback & Discussion
             </h3>
 
             {/* Comment Form */}
-            <form onSubmit={handleCommentSubmit} className="mb-4">
-              <div className="flex flex-col gap-2">
+            <form onSubmit={handleCommentSubmit} style={{ marginBottom: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <textarea
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Share your thoughts about this piece..."
                   rows="2"
-                  className="w-full rounded-xl border p-3 text-xs outline-none transition-all duration-300 resize-none bg-neutral-900/60"
                   style={{
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-primary)',
+                    width: '100%',
+                    borderRadius: '12px',
+                    border: '1px solid var(--line)',
+                    padding: '12px',
+                    fontSize: '0.82rem',
+                    background: 'var(--parchment)',
+                    color: 'var(--ink)',
+                    resize: 'none',
+                    fontFamily: "'Poppins', sans-serif",
+                    outline: 'none',
+                    transition: 'border-color 0.25s',
                   }}
+                  onFocus={(e) => { e.target.style.borderColor = 'var(--mauve)'; }}
+                  onBlur={(e) => { e.target.style.borderColor = 'var(--line)'; }}
                   required
                 />
                 <button
                   type="submit"
                   disabled={isSubmittingComment || !newComment.trim()}
-                  className="self-end rounded-lg px-4 py-1.5 text-xs font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+                  className="btn btn-primary btn-sm"
                   style={{
-                    backgroundColor: 'var(--accent-gold)',
+                    alignSelf: 'flex-end',
+                    opacity: isSubmittingComment || !newComment.trim() ? 0.5 : 1,
+                    pointerEvents: isSubmittingComment || !newComment.trim() ? 'none' : 'auto',
                   }}
                 >
                   {isSubmittingComment ? 'Sending...' : 'Post Comment'}
@@ -283,23 +419,46 @@ useEffect(() => {
             </form>
 
             {/* Comments List */}
-            <div className="flex-1 overflow-y-auto space-y-3 pr-1 max-h-[200px]">
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+              maxHeight: '200px',
+              paddingRight: '4px',
+            }}>
               {comments.length === 0 ? (
-                <p className="text-xs text-center italic py-6" style={{ color: 'var(--text-muted)' }}>
+                <p style={{
+                  textAlign: 'center',
+                  fontSize: '0.78rem',
+                  fontStyle: 'italic',
+                  color: 'var(--ink-soft)',
+                  padding: '24px 0',
+                }}>
                   No comments yet. Be the first to share!
                 </p>
               ) : (
                 comments.map((comment) => (
                   <div
                     key={comment.id}
-                    className="p-3 rounded-lg border text-[11px] leading-relaxed"
                     style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      borderColor: 'var(--border-subtle)',
+                      padding: '12px 14px',
+                      borderRadius: '12px',
+                      border: '1px solid var(--line)',
+                      background: 'var(--parchment)',
+                      fontSize: '0.78rem',
+                      lineHeight: 1.6,
                     }}
                   >
-                    <p style={{ color: 'var(--text-primary)' }}>{comment.comment_text}</p>
-                    <span className="block mt-1 text-[9px] text-right" style={{ color: 'var(--text-muted)' }}>
+                    <p style={{ color: 'var(--ink)' }}>{comment.comment_text}</p>
+                    <span style={{
+                      display: 'block',
+                      marginTop: '6px',
+                      fontSize: '0.62rem',
+                      textAlign: 'right',
+                      color: 'var(--text-muted)',
+                    }}>
                       {new Date(comment.created_at).toLocaleDateString(undefined, {
                         month: 'short',
                         day: 'numeric',
@@ -315,6 +474,14 @@ useEffect(() => {
           </div>
         </div>
       </div>
+
+      {/* Fade-in animation */}
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }

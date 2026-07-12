@@ -1,150 +1,134 @@
+import ScrollRevealSection from '../components/ui/ScrollRevealSection';
+
 export default function ContactPage() {
   return (
     <div>
       {/* Header */}
-      <section className="relative overflow-hidden py-20">
-        <div className="absolute inset-0" style={{ backgroundColor: 'var(--bg-surface)' }} />
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to bottom, var(--bg-overlay), var(--bg-primary))',
-          }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
-          <h1 className="mb-4 text-4xl font-bold sm:text-5xl" style={{ color: 'var(--text-primary)' }}>
-            Get in Touch
-          </h1>
-          <p className="mx-auto max-w-xl text-lg" style={{ color: 'var(--text-muted)' }}>
-            Have a question or want to collaborate? We would love to hear from you.
-          </p>
-        </div>
+      <section className="page-hero">
+        <span className="eyebrow">Reach Out</span>
+        <h1>Get in Touch</h1>
+        <p>Have a question or want to collaborate? We would love to hear from you.</p>
       </section>
 
       {/* Contact Form */}
-      <section className="py-16">
-        <div className="mx-auto max-w-2xl px-6">
-          <div
-            className="rounded-2xl border p-8"
-            style={{
-              borderColor: 'var(--border-subtle)',
-              backgroundColor: 'var(--bg-surface)',
-            }}
-          >
-            <form onSubmit={(e) => e.preventDefault()}>
-              <div className="space-y-6">
-                {/* Name */}
-                <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="mb-2 block text-sm font-medium"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="contact-name"
-                    className="w-full rounded-xl border px-4 py-3 text-sm outline-none transition-all duration-300 focus:ring-1"
-                    style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      borderColor: 'var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                    placeholder="Your name"
-                    disabled
-                  />
-                </div>
+      <section className="section">
+        <div style={{ maxWidth: '640px', margin: '0 auto', padding: '0 24px' }}>
+          <ScrollRevealSection>
+            <div className="contact-card">
+              <form onSubmit={(e) => e.preventDefault()}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {/* Name */}
+                  <div>
+                    <label htmlFor="contact-name">Name</label>
+                    <input
+                      type="text"
+                      id="contact-name"
+                      placeholder="Your name"
+                      disabled
+                    />
+                  </div>
 
-                {/* Email */}
-                <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="mb-2 block text-sm font-medium"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="contact-email"
-                    className="w-full rounded-xl border px-4 py-3 text-sm outline-none transition-all duration-300 focus:ring-1"
-                    style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      borderColor: 'var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                    placeholder="you@example.com"
-                    disabled
-                  />
-                </div>
+                  {/* Email */}
+                  <div>
+                    <label htmlFor="contact-email">Email</label>
+                    <input
+                      type="email"
+                      id="contact-email"
+                      placeholder="you@example.com"
+                      disabled
+                    />
+                  </div>
 
-                {/* Message */}
-                <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="mb-2 block text-sm font-medium"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    rows="5"
-                    className="w-full resize-none rounded-xl border p-4 text-sm outline-none transition-all duration-300 focus:ring-1"
-                    style={{
-                      backgroundColor: 'var(--bg-primary)',
-                      borderColor: 'var(--border-subtle)',
-                      color: 'var(--text-primary)',
-                    }}
-                    placeholder="Tell us what is on your mind..."
-                    disabled
-                  />
-                </div>
+                  {/* Message */}
+                  <div>
+                    <label htmlFor="contact-message">Message</label>
+                    <textarea
+                      id="contact-message"
+                      rows="5"
+                      placeholder="Tell us what is on your mind..."
+                      disabled
+                    />
+                  </div>
 
-                {/* Submit */}
-                <button
-                  type="submit"
-                  className="w-full cursor-not-allowed rounded-xl px-8 py-3.5 text-sm font-semibold opacity-50 text-white"
-                  style={{
-                    backgroundColor: 'var(--accent-gold)',
-                  }}
-                  disabled
-                >
-                  Send Message
-                </button>
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    style={{
+                      width: '100%',
+                      justifyContent: 'center',
+                      opacity: 0.5,
+                      cursor: 'not-allowed',
+                    }}
+                    disabled
+                  >
+                    Send Message
+                  </button>
+                </div>
+              </form>
+
+              <p style={{
+                marginTop: '20px',
+                textAlign: 'center',
+                fontSize: '0.78rem',
+                fontStyle: 'italic',
+                color: 'var(--ink-soft)',
+              }}>
+                Contact form will be functional once the backend is connected.
+              </p>
+            </div>
+          </ScrollRevealSection>
+
+          {/* Alternative contact cards */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '20px',
+            marginTop: '40px',
+          }}>
+            <ScrollRevealSection>
+              <div style={{
+                background: 'var(--cream)',
+                border: '1px solid var(--line)',
+                borderRadius: '20px',
+                padding: '28px',
+                textAlign: 'center',
+              }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  marginBottom: '12px',
+                  color: 'var(--gold)',
+                }}>✉</div>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1rem',
+                  marginBottom: '6px',
+                }}>Email</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--ink-soft)' }}>hello@virtualgallery.com</p>
               </div>
-            </form>
+            </ScrollRevealSection>
 
-            <p className="mt-6 text-center text-xs italic" style={{ color: 'var(--text-muted)' }}>
-              Contact form will be functional once the backend is connected.
-            </p>
-          </div>
-
-          {/* Alternative contact */}
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            <div
-              className="rounded-2xl border p-6 text-center"
-              style={{
-                borderColor: 'var(--border-subtle)',
-                backgroundColor: 'var(--bg-surface)',
-              }}
-            >
-              <div className="mb-3 text-2xl" style={{ color: 'var(--accent-gold)' }}>&#9993;</div>
-              <h3 className="mb-1 text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Email</h3>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>hello@virtualgallery.com</p>
-            </div>
-            <div
-              className="rounded-2xl border p-6 text-center"
-              style={{
-                borderColor: 'var(--border-subtle)',
-                backgroundColor: 'var(--bg-surface)',
-              }}
-            >
-              <div className="mb-3 text-2xl" style={{ color: 'var(--accent-gold)' }}>&#9826;</div>
-              <h3 className="mb-1 text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Location</h3>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Manila, Philippines</p>
-            </div>
+            <ScrollRevealSection>
+              <div style={{
+                background: 'var(--cream)',
+                border: '1px solid var(--line)',
+                borderRadius: '20px',
+                padding: '28px',
+                textAlign: 'center',
+              }}>
+                <div style={{
+                  fontSize: '1.5rem',
+                  marginBottom: '12px',
+                  color: 'var(--gold)',
+                }}>♦</div>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1rem',
+                  marginBottom: '6px',
+                }}>Location</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--ink-soft)' }}>Manila, Philippines</p>
+              </div>
+            </ScrollRevealSection>
           </div>
         </div>
       </section>

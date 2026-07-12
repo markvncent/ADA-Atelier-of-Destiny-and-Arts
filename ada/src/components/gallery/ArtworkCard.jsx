@@ -32,96 +32,184 @@ export default function ArtworkCard({ artwork, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="group relative cursor-pointer overflow-hidden border border-black"
+      className="artwork-card group"
       style={{
-        backgroundColor: 'var(--bg-surface)',
-        borderColor: 'var(--border-subtle)',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
       }}
     >
       {/* Media Preview Container */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100 flex items-center justify-center border-b border-black">
+      <div style={{
+        position: 'relative',
+        aspectRatio: '4/3',
+        width: '100%',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--parchment)',
+      }}>
         {displayImage ? (
           <img
             src={displayImage}
             alt={title}
-            className="h-full w-full object-cover"
+            style={{ height: '100%', width: '100%', objectFit: 'cover' }}
             loading="lazy"
           />
         ) : (
-          <div 
-            className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-100"
-            style={{ 
-              backgroundColor: 'var(--bg-surface)',
-            }}
-          >
+          <div style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '12px',
+            background: `radial-gradient(circle at center, rgba(224,196,140,0.12), var(--parchment))`,
+          }}>
             {IconComponent ? (
               <IconComponent 
-                className="w-12 h-12" 
-                style={{ color: 'var(--text-primary)' }}
+                style={{ width: '48px', height: '48px', color: 'var(--mauve-deep)' }}
                 strokeWidth={1.5}
               />
             ) : (
-              <span className="text-4xl">✨</span>
+              <span style={{ fontSize: '2.4rem' }}>✨</span>
             )}
-            <span className="text-[10px] uppercase font-bold tracking-wider opacity-40 text-center px-4" style={{ color: 'var(--text-muted)' }}>
+            <span style={{
+              fontSize: '0.65rem',
+              textTransform: 'uppercase',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              opacity: 0.5,
+              color: 'var(--ink-soft)',
+            }}>
               {media_type} preview
             </span>
           </div>
         )}
         
-        {/* Media type icon badge */}
-        <span className="absolute top-3 left-3 bg-white text-black text-xs py-1 px-2.5 border border-black flex items-center gap-1.5">
+        {/* Media type badge */}
+        <span style={{
+          position: 'absolute',
+          top: '12px',
+          left: '12px',
+          background: 'var(--cream)',
+          fontSize: '0.65rem',
+          padding: '4px 10px',
+          borderRadius: '999px',
+          border: '1px solid var(--line)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '6px',
+          color: 'var(--ink)',
+          fontWeight: 500,
+          textTransform: 'capitalize',
+          letterSpacing: '0.04em',
+        }}>
           <span>{typeIcons[media_type] || '✨'}</span>
-          <span className="capitalize text-[10px] tracking-wide font-medium">{media_type}</span>
+          <span>{media_type}</span>
         </span>
 
         {/* Fallback Preview Tag */}
         {is_fallback && (
-          <span className="absolute top-3 right-3 bg-white text-[10px] font-bold text-black border border-black px-2 py-0.5 uppercase tracking-wider">
+          <span style={{
+            position: 'absolute',
+            top: '12px',
+            right: '12px',
+            background: 'rgba(221,167,133,0.16)',
+            color: 'var(--peach-deep)',
+            fontSize: '0.6rem',
+            fontWeight: 600,
+            border: '1px solid rgba(221,167,133,0.4)',
+            padding: '3px 8px',
+            borderRadius: '999px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+          }}>
             Preview
           </span>
         )}
       </div>
 
       {/* Info details */}
-      <div className="p-5 flex flex-col justify-between flex-1">
+      <div style={{
+        padding: '18px 20px 20px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        flex: 1,
+      }}>
         <div>
-          <h3 className="text-lg font-semibold line-clamp-1 mb-1" style={{ color: 'var(--text-primary)' }}>
+          <h3 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: '1.05rem',
+            fontWeight: 600,
+            color: 'var(--ink)',
+            marginBottom: '6px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          }}>
             {title}
           </h3>
-          <p className="text-sm line-clamp-2 mb-4" style={{ color: 'var(--text-muted)' }}>
+          <p style={{
+            fontSize: '0.82rem',
+            color: 'var(--ink-soft)',
+            lineHeight: 1.5,
+            marginBottom: '14px',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+          }}>
             {description}
           </p>
         </div>
 
         {artwork.subcategory && (
-          <div
-            className="text-[10px] tracking-wider uppercase mb-3 select-none font-semibold"
-            style={{ color: 'var(--text-primary)' }}
-          >
+          <div style={{
+            fontSize: '0.65rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            marginBottom: '12px',
+            fontWeight: 600,
+            color: 'var(--mauve-deep)',
+          }}>
             {artwork.subcategory}
           </div>
         )}
 
-        {/* Card Footer: Rating stars & Details */}
-        <div className="flex items-center justify-between border-t pt-4" style={{ borderColor: 'var(--border-subtle)' }}>
-          <div className="flex items-center gap-1.5">
-            <span className="text-black text-sm">★</span>
-            <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
+        {/* Card Footer */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderTop: '1px solid var(--line)',
+          paddingTop: '14px',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ color: 'var(--gold)', fontSize: '0.9rem' }}>★</span>
+            <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--ink)' }}>
               {avgRating > 0 ? avgRating : 'No ratings'}
             </span>
             {ratingCount > 0 && (
-              <span className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
+              <span style={{ fontSize: '0.7rem', color: 'var(--ink-soft)' }}>
                 ({ratingCount})
               </span>
             )}
           </div>
-          <span
-            className="text-xs font-medium flex items-center gap-1 group-hover:underline"
-            style={{ color: 'var(--text-primary)' }}
-          >
+          <span style={{
+            fontSize: '0.72rem',
+            fontWeight: 500,
+            color: 'var(--mauve-deep)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            letterSpacing: '0.06em',
+          }}>
             Open Exhibition
-            <span className="text-xs">→</span>
+            <span style={{ transition: 'transform 0.25s' }}>→</span>
           </span>
         </div>
       </div>

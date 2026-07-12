@@ -7,6 +7,7 @@ import { getCategoryFeedback, submitCategoryFeedback } from '../services/feedbac
 import ArtworkCard from '../components/gallery/ArtworkCard.jsx';
 import ArtworkModal from '../components/gallery/ArtworkModal.jsx';
 import { getCategoryById } from '../services/categories.js';
+import FairyDust from '../components/ui/FairyDust.jsx';
 
 function parseCategoryName(fullName) {
   if (!fullName) return { main: "", sub: "" };
@@ -51,24 +52,19 @@ export default function CategoryPage() {
       let fetchedFeedback = [];
 
       try {
-        // Try fetching category details from Supabase
         try {
           const fetchedCat = await getCategoryById(category.id);
-          if (fetchedCat) {
-            setDbCategory(fetchedCat);
-          }
+          if (fetchedCat) setDbCategory(fetchedCat);
         } catch (_e) {
           console.warn('Failed to fetch category details from Supabase');
         }
 
-        // Try fetching artworks from Supabase
         try {
           fetchedArtworks = await getArtworksByCategory(category.id);
         } catch (_e) {
           console.warn('Failed to fetch from Supabase, using mock fallback artworks');
         }
 
-        // Try fetching general category comments
         try {
           fetchedFeedback = await getCategoryFeedback(category.id);
         } catch (_e) {
@@ -77,12 +73,10 @@ export default function CategoryPage() {
       } catch (err) {
         console.error('Data loading error:', err);
       } finally {
-        // Fallback checks
         if (!fetchedArtworks || fetchedArtworks.length === 0) {
           fetchedArtworks = fallbackArtworks[category.slug] || [];
         }
 
-        // Merge category feedback with localStorage category feedback
         const localFeedback = JSON.parse(localStorage.getItem(`cat_feedback_${category.slug}`) || '[]');
         const combinedFeedback = [...localFeedback, ...fetchedFeedback].sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
@@ -101,7 +95,6 @@ export default function CategoryPage() {
     setArtworks((prev) =>
       prev.map((art) => (art.id === artworkId ? { ...art, ...updatedFields } : art))
     );
-    // If currently expanded in the modal, update its details
     if (activeArtwork && activeArtwork.id === artworkId) {
       setActiveArtwork((prev) => ({ ...prev, ...updatedFields }));
     }
@@ -120,10 +113,8 @@ export default function CategoryPage() {
     };
 
     try {
-      // Try DB submit first
       try {
         await submitCategoryFeedback(category.id, newFeedback.trim());
-        // Reload feedback
         const freshFeedback = await getCategoryFeedback(category.id);
         const localFeedback = JSON.parse(localStorage.getItem(`cat_feedback_${category.slug}`) || '[]');
         setFeedbackList([...localFeedback, ...freshFeedback].sort(
@@ -135,7 +126,6 @@ export default function CategoryPage() {
         console.warn('Database write failed, writing category feedback locally');
       }
 
-      // Local storage fallback
       const localFeedback = JSON.parse(localStorage.getItem(`cat_feedback_${category.slug}`) || '[]');
       localFeedback.unshift(feedbackObject);
       localStorage.setItem(`cat_feedback_${category.slug}`, JSON.stringify(localFeedback));
@@ -158,247 +148,352 @@ export default function CategoryPage() {
 
   if (!category) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center px-6 text-center">
-        <h1 className="mb-4 text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-          Category Not Found
-        </h1>
-        <p className="mb-8" style={{ color: 'var(--text-muted)' }}>
-          The category you're looking for doesn't exist.
+      <div style={{
+        display: 'flex',
+        minHeight: '60vh',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '24px',
+        textAlign: 'center',
+      }}>
+        <h1 style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: '2.2rem',
+          marginBottom: '16px',
+          color: 'var(--ink)',
+        }}>Category Not Found</h1>
+        <p style={{ color: 'var(--ink-soft)', marginBottom: '32px' }}>
+          The category you&apos;re looking for doesn&apos;t exist.
         </p>
-        <Link
-          to="/"
-          className="rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 border border-theme"
-          style={{
-            backgroundColor: 'var(--text-primary)',
-            color: 'var(--bg-primary)',
-            boxShadow: 'none',
-          }}
-        >
-          Back to Home
-        </Link>
+        <Link to="/" className="btn btn-primary">Back to Home</Link>
       </div>
     );
   }
 
   return (
-    <div className="relative">
+    <div style={{ position: 'relative' }}>
       {/* Category Header */}
-      <section className="relative z-0 w-full pt-32 pb-16 md:pt-44 md:pb-24 border-b" style={{ backgroundColor: 'var(--bg-surface)' }}>
-        <div className="relative z-10 mx-auto max-w-7xl px-6 text-left">
+      <section style={{
+        position: 'relative',
+        width: '100%',
+        paddingTop: '120px',
+        paddingBottom: '64px',
+        background: `
+          radial-gradient(ellipse 60% 50% at 30% 0%, rgba(203,212,169,0.35), transparent 60%),
+          radial-gradient(ellipse 50% 40% at 80% 10%, rgba(221,167,133,0.25), transparent 60%),
+          var(--parchment)
+        `,
+      }}>
+        <FairyDust count={8} />
+        {/* Right background watermark constellation */}
+        <div style={{ position: 'absolute', right: '8%', top: '15%', opacity: 0.08, pointerEvents: 'none' }} className="hidden md:block">
+          <svg width="180" height="250" viewBox="0 0 240 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none"/>
+            <line x1="40" y1="120" x2="200" y2="120" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
+            <line x1="120" y1="30" x2="120" y2="280" stroke="var(--gold)" strokeWidth="1"/>
+            <line x1="40" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
+            <line x1="200" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
+            <path d="M120,20 L122,25 L127,27 L122,29 L120,34 L118,29 L113,27 L118,25 Z" fill="var(--gold)"/>
+            <circle cx="40" cy="120" r="3.5" fill="var(--gold)"/>
+            <circle cx="200" cy="120" r="3.5" fill="var(--gold)"/>
+            <path d="M120,195 L123,202 L130,205 L123,208 L120,215 L117,208 L110,205 L117,202 Z" fill="var(--gold)"/>
+          </svg>
+        </div>
+        <div style={{ position: 'relative', zIndex: 10, maxWidth: '1180px', margin: '0 auto', padding: '0 24px' }}>
           {(() => {
             const { main, sub } = parseCategoryName(category.name);
             return (
-              <div className="mb-6 flex flex-col items-start gap-2">
-                <h1 className="text-5xl sm:text-6xl md:text-7.5xl lg:text-8.5xl font-bold leading-none tracking-wide text-theme-primary">
+              <div style={{ marginBottom: '24px' }}>
+                <h1 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  color: 'var(--ink)',
+                }}>
                   {main}
                 </h1>
                 {sub && (
-                  <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold tracking-wider text-theme-secondary">
+                  <span style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: '1rem',
+                    fontWeight: 500,
+                    letterSpacing: '0.05em',
+                    color: 'var(--mauve-deep)',
+                    marginTop: '6px',
+                    display: 'block',
+                  }}>
                     {sub}
                   </span>
                 )}
               </div>
             );
           })()}
-          <p className="max-w-3xl text-base md:text-lg leading-relaxed text-theme-secondary whitespace-pre-line">
+          <p style={{
+            maxWidth: '640px',
+            fontSize: '1rem',
+            lineHeight: 1.75,
+            color: 'var(--ink-soft)',
+          }}>
             {dbCategory?.expanded_description || category?.expanded_description || category?.description}
           </p>
         </div>
       </section>
 
-      <div 
-        className="relative z-10"
-        style={{ backgroundColor: 'var(--bg-primary)' }}
-      >
+      <div style={{ position: 'relative', zIndex: 10, background: 'var(--cream)' }}>
         {/* Artworks Display Section */}
-        <section className="py-16">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-              Collection Pieces
-            </h2>
-            {artworks.some(art => art.is_fallback) && (
-              <span className="text-xs px-3 py-1 bg-neutral-500/10 text-neutral-400 border border-neutral-500/20 rounded-full">
-                Interactive Fallback Previews Loaded
-              </span>
-            )}
-          </div>
-
-          {/* Subcategory filter toggle (Only for Traditional & Painting) */}
-          {(category?.slug === 'traditional-painting' || category?.slug === 'silid-lona') && (
-            <div className="flex justify-center md:justify-start mb-8 font-serif" style={{ fontFamily: 'EB Garamond, Georgia, serif' }}>
-              <div className="inline-flex rounded-full p-1 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-brown)' }}>
-                {['All', 'Drawing', 'Painting'].map((subcat) => {
-                  const isActive = selectedSubcategory === subcat;
-                  return (
-                    <button
-                      key={subcat}
-                      type="button"
-                      onClick={() => setSelectedSubcategory(subcat)}
-                      className="px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 select-none cursor-pointer"
-                      style={{
-                        backgroundColor: isActive ? 'var(--text-primary)' : 'transparent',
-                        color: isActive ? 'var(--bg-primary)' : 'var(--text-secondary)',
-                        border: 'none',
-                      }}
-                    >
-                      {subcat}
-                    </button>
-                  );
-                })}
-              </div>
+        <section className="section">
+          <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '0 24px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+              <h2 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '1.6rem',
+                color: 'var(--ink)',
+              }}>Collection Pieces</h2>
+              {artworks.some(art => art.is_fallback) && (
+                <span style={{
+                  fontSize: '0.72rem',
+                  padding: '6px 14px',
+                  background: 'rgba(221,167,133,0.16)',
+                  color: 'var(--peach-deep)',
+                  border: '1px solid rgba(221,167,133,0.4)',
+                  borderRadius: '999px',
+                }}>
+                  Interactive Fallback Previews Loaded
+                </span>
+              )}
             </div>
-          )}
 
-          {loading ? (
-            /* Skeleton Loading Grid Placeholders */
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((skeletonIndex) => (
-                <div
-                  key={skeletonIndex}
-                  className="rounded-2xl border p-4 space-y-4 animate-pulse bg-neutral-900/30"
-                  style={{ borderColor: 'var(--border-subtle)' }}
-                >
-                  <div className="aspect-[4/3] w-full rounded-xl bg-neutral-800/40" />
-                  <div className="h-6 w-3/4 rounded bg-neutral-800/40" />
-                  <div className="h-4 w-5/6 rounded bg-neutral-800/40" />
-                  <div className="h-10 w-full rounded bg-neutral-800/40" />
+            {/* Subcategory filter toggle (Only for Traditional & Painting) */}
+            {(category?.slug === 'traditional-painting' || category?.slug === 'silid-lona') && (
+              <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '32px' }}>
+                <div style={{
+                  display: 'inline-flex',
+                  borderRadius: '999px',
+                  padding: '4px',
+                  border: '1px solid var(--line)',
+                  background: 'var(--parchment)',
+                }}>
+                  {['All', 'Drawing', 'Painting'].map((subcat) => {
+                    const isActive = selectedSubcategory === subcat;
+                    return (
+                      <button
+                        key={subcat}
+                        type="button"
+                        onClick={() => setSelectedSubcategory(subcat)}
+                        style={{
+                          padding: '8px 20px',
+                          borderRadius: '999px',
+                          fontSize: '0.82rem',
+                          fontFamily: "'Poppins', sans-serif",
+                          fontWeight: 500,
+                          border: 'none',
+                          cursor: 'pointer',
+                          background: isActive ? 'linear-gradient(135deg, var(--mauve), var(--mauve-deep))' : 'transparent',
+                          color: isActive ? 'var(--cream)' : 'var(--ink-soft)',
+                          transition: 'all 0.3s',
+                        }}
+                      >
+                        {subcat}
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-          ) : filteredArtworks.length === 0 ? (
-            /* Empty State */
-            <div
-              className="flex min-h-[300px] flex-col items-center justify-center rounded-2xl border border-dashed p-12 text-center"
-              style={{
-                borderColor: 'var(--border-subtle)',
-                backgroundColor: 'var(--bg-surface)',
-              }}
-            >
-              <div className="mb-4 text-5xl opacity-40">&#128444;</div>
-              <h3 className="mb-2 text-lg font-medium font-serif" style={{ color: 'var(--text-secondary)', fontFamily: 'EB Garamond, Georgia, serif' }}>
-                {artworks.length === 0
-                  ? 'No artworks uploaded yet'
-                  : `No ${selectedSubcategory} works yet.`}
-              </h3>
-              <p className="max-w-md text-sm" style={{ color: 'var(--text-muted)' }}>
-                {artworks.length === 0
-                  ? 'Artworks for this category will appear here once they are added through the admin panel.'
-                  : `Artworks for this subcategory will appear here once they are added.`}
-              </p>
-            </div>
-          ) : (
-            /* Active Grid List */
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filteredArtworks.map((artwork) => (
-                <ArtworkCard
-                  key={artwork.id}
-                  artwork={artwork}
-                  onClick={() => setActiveArtwork(artwork)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Category Level Feedback Section */}
-      <section className="py-16" style={{ borderTop: '1px solid var(--border-subtle)' }}>
-        <div className="mx-auto max-w-3xl px-6">
-          <h2 className="mb-2 text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
-            Exhibition Hall Feedback
-          </h2>
-          <p className="mb-8 text-sm" style={{ color: 'var(--text-muted)' }}>
-            Share your general thoughts, notes, or reviews on the {category.name} collection.
-          </p>
-
-          {/* Feedback Submission Form */}
-          <div
-            className="rounded-2xl border p-6 mb-8"
-            style={{
-              borderColor: 'var(--border-subtle)',
-              backgroundColor: 'var(--bg-surface)',
-            }}
-          >
-            <form onSubmit={handleFeedbackSubmit}>
-              <textarea
-                value={newFeedback}
-                onChange={(e) => setNewFeedback(e.target.value)}
-                className="w-full resize-none rounded-xl border p-4 text-sm outline-none transition-all duration-300 bg-neutral-900/40"
-                style={{
-                  borderColor: 'var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                }}
-                rows="3"
-                placeholder="Write your feedback for this hall here..."
-                required
-              />
-              <div className="mt-4 flex justify-end">
-                <button
-                  type="submit"
-                  disabled={isSubmittingFeedback || !newFeedback.trim()}
-                  className="rounded-xl px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
-                  style={{
-                    backgroundColor: 'var(--text-primary)',
-                    color: 'var(--bg-primary)',
-                  }}
-                >
-                  {isSubmittingFeedback ? 'Submitting...' : 'Submit Feedback'}
-                </button>
               </div>
-            </form>
-          </div>
+            )}
 
-          {/* Category Feedback List */}
-          <div className="space-y-4">
-            {feedbackList.length === 0 ? (
-              <p className="text-center text-xs italic py-6" style={{ color: 'var(--text-muted)' }}>
-                No feedback submitted yet.
-              </p>
+            {loading ? (
+              /* Skeleton Loading */
+              <div style={{
+                display: 'grid',
+                gap: '24px',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              }}>
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    style={{
+                      borderRadius: '18px',
+                      border: '1px solid var(--line)',
+                      padding: '16px',
+                      background: 'var(--parchment)',
+                    }}
+                  >
+                    <div style={{
+                      aspectRatio: '4/3',
+                      borderRadius: '12px',
+                      background: 'linear-gradient(90deg, var(--cream-deep) 25%, var(--parchment) 50%, var(--cream-deep) 75%)',
+                      backgroundSize: '200% 100%',
+                      animation: 'shimmer 1.5s infinite',
+                      marginBottom: '14px',
+                    }} />
+                    <div style={{ height: '20px', width: '75%', borderRadius: '8px', background: 'var(--cream-deep)', marginBottom: '8px' }} />
+                    <div style={{ height: '14px', width: '85%', borderRadius: '8px', background: 'var(--cream-deep)' }} />
+                  </div>
+                ))}
+              </div>
+            ) : filteredArtworks.length === 0 ? (
+              /* Empty State */
+              <div style={{
+                display: 'flex',
+                minHeight: '300px',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '20px',
+                border: '2px dashed var(--line)',
+                padding: '48px',
+                textAlign: 'center',
+                background: 'var(--parchment)',
+              }}>
+                <div style={{ fontSize: '3rem', opacity: 0.4, marginBottom: '16px' }}>🖼</div>
+                <h3 style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '1.1rem',
+                  color: 'var(--ink-soft)',
+                  marginBottom: '8px',
+                }}>
+                  {artworks.length === 0 ? 'No artworks uploaded yet' : `No ${selectedSubcategory} works yet.`}
+                </h3>
+                <p style={{ maxWidth: '400px', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+                  {artworks.length === 0
+                    ? 'Artworks for this category will appear here once they are added through the admin panel.'
+                    : 'Artworks for this subcategory will appear here once they are added.'}
+                </p>
+              </div>
             ) : (
-              feedbackList.map((feedback) => (
-                <div
-                  key={feedback.id}
-                  className="p-4 rounded-xl border text-xs leading-relaxed"
-                  style={{
-                    backgroundColor: 'var(--bg-surface)',
-                    borderColor: 'var(--border-subtle)',
-                  }}
-                >
-                  <p style={{ color: 'var(--text-secondary)' }}>{feedback.comment_text}</p>
-                  <span className="block mt-2 text-[10px] text-right" style={{ color: 'var(--text-muted)' }}>
-                    {new Date(feedback.created_at).toLocaleDateString(undefined, {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
-                </div>
-              ))
+              /* Active Grid */
+              <div style={{
+                display: 'grid',
+                gap: '24px',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              }}>
+                {filteredArtworks.map((artwork) => (
+                  <ArtworkCard
+                    key={artwork.id}
+                    artwork={artwork}
+                    onClick={() => setActiveArtwork(artwork)}
+                  />
+                ))}
+              </div>
             )}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Back to Home Gallery */}
-      <section className="pb-16 text-center">
-        <Link
-          to="/#gallery"
-          className="inline-flex items-center gap-2 text-sm transition-colors duration-300"
-          style={{ color: 'var(--text-muted)' }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; }}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M19 12H5" />
-            <path d="m12 19-7-7 7-7" />
-          </svg>
-          Back to all rooms
-        </Link>
-      </section>
+        {/* Category Level Feedback Section */}
+        <section className="section" style={{ borderTop: '1px solid var(--line)' }}>
+          <div style={{ maxWidth: '720px', margin: '0 auto', padding: '0 24px' }}>
+            <h2 style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: '1.6rem',
+              color: 'var(--ink)',
+              marginBottom: '8px',
+            }}>Exhibition Hall Feedback</h2>
+            <p style={{
+              fontSize: '0.88rem',
+              color: 'var(--ink-soft)',
+              marginBottom: '32px',
+            }}>
+              Share your general thoughts, notes, or reviews on the {category.name} collection.
+            </p>
 
+            {/* Feedback Form */}
+            <div className="feedback-box" style={{ marginTop: 0, marginBottom: '32px' }}>
+              <form onSubmit={handleFeedbackSubmit}>
+                <textarea
+                  value={newFeedback}
+                  onChange={(e) => setNewFeedback(e.target.value)}
+                  rows="3"
+                  placeholder="Write your feedback for this hall here..."
+                  required
+                />
+                <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+                  <button
+                    type="submit"
+                    disabled={isSubmittingFeedback || !newFeedback.trim()}
+                    className="btn btn-primary btn-sm"
+                    style={{
+                      opacity: isSubmittingFeedback || !newFeedback.trim() ? 0.5 : 1,
+                      pointerEvents: isSubmittingFeedback || !newFeedback.trim() ? 'none' : 'auto',
+                    }}
+                  >
+                    {isSubmittingFeedback ? 'Submitting...' : 'Submit Feedback'}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Feedback List */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {feedbackList.length === 0 ? (
+                <p style={{
+                  textAlign: 'center',
+                  fontSize: '0.82rem',
+                  fontStyle: 'italic',
+                  color: 'var(--ink-soft)',
+                  padding: '24px 0',
+                }}>
+                  No feedback submitted yet.
+                </p>
+              ) : (
+                feedbackList.map((feedback) => (
+                  <div
+                    key={feedback.id}
+                    style={{
+                      padding: '16px 20px',
+                      borderRadius: '16px',
+                      border: '1px solid var(--line)',
+                      background: 'var(--parchment)',
+                      fontSize: '0.85rem',
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    <p style={{ color: 'var(--ink-soft)' }}>{feedback.comment_text}</p>
+                    <span style={{
+                      display: 'block',
+                      marginTop: '8px',
+                      fontSize: '0.7rem',
+                      textAlign: 'right',
+                      color: 'var(--text-muted)',
+                    }}>
+                      {new Date(feedback.created_at).toLocaleDateString(undefined, {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Back to Home */}
+        <section style={{ paddingBottom: '64px', textAlign: 'center' }}>
+          <Link
+            to="/#categories"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              fontSize: '0.85rem',
+              color: 'var(--ink-soft)',
+              transition: 'color 0.25s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--mauve-deep)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--ink-soft)'; }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M19 12H5" />
+              <path d="m12 19-7-7 7-7" />
+            </svg>
+            Back to all rooms
+          </Link>
+        </section>
       </div>
 
       {/* Lightbox / Artwork Modal */}
@@ -409,6 +504,14 @@ export default function CategoryPage() {
           onUpdateArtwork={handleUpdateArtwork}
         />
       )}
+
+      {/* Shimmer animation for skeletons */}
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
     </div>
   );
 }

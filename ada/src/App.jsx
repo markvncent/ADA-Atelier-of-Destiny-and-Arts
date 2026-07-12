@@ -5,7 +5,6 @@ import ScrollToHash from './components/layout/ScrollToHash.jsx';
 import HomePage from './pages/HomePage.jsx';
 import CategoryPage from './pages/CategoryPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
-import ContactPage from './pages/ContactPage.jsx';
 import AdminPage from './pages/AdminPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminGate from './components/admin/AdminGate.jsx';
@@ -38,7 +37,6 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/category/:slug" element={<CategoryPage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
               <Route path="/admin" element={<AdminPage />} />
             </Routes>
           </Layout>

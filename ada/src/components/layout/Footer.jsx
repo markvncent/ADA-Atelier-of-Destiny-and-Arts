@@ -6,191 +6,188 @@ export default function Footer() {
   const isAboutPage = location.pathname === '/about';
 
   return (
-    <footer
-      className="border-t"
-      style={{
-        backgroundColor: 'var(--bg-surface)',
-        color: 'var(--text-secondary)',
-        borderColor: 'var(--border-subtle)',
-      }}
-    >
-      {isAboutPage ? (
-        <div className="mx-auto max-w-7xl px-6 py-6 flex flex-col gap-6 w-full">
-          {/* Bento Header */}
-          <div className="flex items-center gap-4 justify-center md:justify-start">
-            <span className="h-[1px] w-8 bg-neutral-200 hidden md:block"></span>
-            <h4 className="font-heading text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: 'var(--text-primary)' }}>
-              Artists
-            </h4>
-            <span className="h-[1px] flex-1 bg-neutral-200 hidden md:block"></span>
-          </div>
+    <footer className="fairy-footer">
+      <div className="container">
+        {isAboutPage ? (
+          /* ─── About Page: Artist Bento Grid Footer ─── */
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {/* Artists Header */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <span style={{ height: '1px', width: '32px', background: 'var(--gold-soft)' }} />
+              <h4 style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: '0.85rem',
+                letterSpacing: '0.18em',
+                textTransform: 'uppercase',
+                color: 'var(--gold-soft)',
+              }}>
+                Artists
+              </h4>
+              <span style={{ height: '1px', flex: 1, background: 'rgba(251,247,239,0.14)' }} />
+            </div>
 
-          {/* Bento Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 w-full">
-            {[
-              { name: 'Achas, Kieth Lawrence', email: 's.achas.kiethlawrence@cmu.edu.ph' },
-              { name: 'Galleros, Kimberly', email: 's.galleros.kimberly@cmu.edu.ph' },
-              { name: 'Pañares, Frenche Jyne', email: 's.panares.frenchejyne@cmu.edu.ph' },
-              { name: 'Revilla, Cherlyn', email: 's.revillia.cherlyn@cmu.edu.ph' },
-              { name: 'Saballia, Clarence', email: 's.saballia.clarence@cmu.edu.ph' },
-              { name: 'Tan, Rodge Daniellette', email: 's.tan.rodgedaniellette@cmu.edu.ph' },
-            ].map((artist, idx) => (
-              <div
-                key={idx}
-                className="group relative flex flex-col items-center justify-center p-4 transition-all duration-300 border text-center select-none"
-                style={{
-                  backgroundColor: 'var(--bg-primary)',
-                  borderColor: 'var(--border-subtle)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--text-primary)';
-                  const pEl = e.currentTarget.querySelector('p');
-                  if (pEl) pEl.style.color = 'var(--bg-primary)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--bg-primary)';
-                  const pEl = e.currentTarget.querySelector('p');
-                  if (pEl) pEl.style.color = 'var(--text-primary)';
-                }}
-              >
-                {/* Artist Name */}
-                <p 
-                  className="font-sans font-medium text-xs sm:text-[13px] leading-tight py-1.5"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  {artist.name}
-                </p>
-
-                {/* Popover Email Block */}
-                <div 
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 px-3 py-1.5 border opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 pointer-events-none z-50 text-[10px] font-sans tracking-wide whitespace-nowrap"
+            {/* Artist Bento Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              gap: '12px',
+            }}>
+              {[
+                { name: 'Achas, Kieth Lawrence', email: 's.achas.kiethlawrence@cmu.edu.ph' },
+                { name: 'Galleros, Kimberly', email: 's.galleros.kimberly@cmu.edu.ph' },
+                { name: 'Pañares, Frenche Jyne', email: 's.panares.frenchejyne@cmu.edu.ph' },
+                { name: 'Revilla, Cherlyn', email: 's.revillia.cherlyn@cmu.edu.ph' },
+                { name: 'Saballia, Clarence', email: 's.saballia.clarence@cmu.edu.ph' },
+                { name: 'Tan, Rodge Daniellette', email: 's.tan.rodgedaniellette@cmu.edu.ph' },
+              ].map((artist, idx) => (
+                <div
+                  key={idx}
+                  className="group"
                   style={{
-                    backgroundColor: 'var(--bg-surface)',
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-primary)',
+                    position: 'relative',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '16px 12px',
+                    border: '1px solid rgba(251,247,239,0.14)',
+                    borderRadius: '12px',
+                    textAlign: 'center',
+                    cursor: 'default',
+                    transition: 'background 0.3s, border-color 0.3s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(199,160,92,0.12)';
+                    e.currentTarget.style.borderColor = 'var(--gold-soft)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'rgba(251,247,239,0.14)';
                   }}
                 >
-                  {artist.email}
-                  {/* Tooltip arrow */}
-                  <div 
-                    className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 border-r border-b"
-                    style={{
-                      backgroundColor: 'var(--bg-surface)',
-                      borderColor: 'var(--border-subtle)',
-                      marginTop: '-5px'
-                    }}
-                  />
+                  <p style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontWeight: 500,
+                    fontSize: '0.78rem',
+                    color: 'rgba(251,247,239,0.85)',
+                    lineHeight: 1.4,
+                  }}>
+                    {artist.name}
+                  </p>
                 </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom minimal footer details */}
-          <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t text-[11px]" style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}>
-            <p>&copy; {currentYear} ADA — Atelier of Destiny and Arts. All works remain property of their creators.</p>
-            <Link
-              to="/admin"
-              className="hover:underline transition-colors duration-300 mt-2 sm:mt-0"
-              style={{ color: 'var(--text-muted)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; }}
-            >
-              Admin Dashboard
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid gap-12 md:grid-cols-3">
-            {/* Brand Column */}
-            <div>
-              <Link to="/" className="group mb-4 inline-flex items-center">
-                <span className="text-2xl font-bold tracking-[0.2em] font-kingston uppercase" style={{ color: 'var(--text-primary)' }}>
-                  ADA.
-                </span>
-              </Link>
-              <p
-                className="mt-3 max-w-xs text-sm leading-relaxed"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                Where Creativity Blossoms and Destinies Unfold.
-              </p>
+              ))}
             </div>
 
-            {/* Quick Links */}
-            <div>
-              <h3
-                className="mb-4 text-xs font-semibold uppercase tracking-wider"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                Navigation
-              </h3>
-              <ul className="space-y-3 font-sans text-xs">
-                {[
-                  { to: '/', label: 'Home' },
-                  { to: '/#categories', label: 'Gallery' },
-                  { to: '/about', label: 'About' },
-                ].map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.to}
-                      className="text-[13px]"
-                      style={{ color: 'var(--text-secondary)' }}
-                      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Admin Redirection */}
-            <div>
-              <h3
-                className="mb-4 text-xs font-semibold uppercase tracking-wider"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                Administration
-              </h3>
-              <p className="mb-4 text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                Are you an authorized creator? Access the dashboard to manage artworks and comments.
-              </p>
+            {/* Bottom bar */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: '20px',
+              borderTop: '1px solid rgba(251,247,239,0.14)',
+              fontSize: '0.72rem',
+              color: 'rgba(251,247,239,0.55)',
+              flexWrap: 'wrap',
+              gap: '10px',
+            }}>
+              <span>&copy; {currentYear} ADA — Atelier of Destiny and Arts. All works remain property of their creators.</span>
               <Link
                 to="/admin"
-                className="inline-flex items-center gap-2 border px-5 py-2.5 text-xs font-semibold font-sans uppercase tracking-[0.06em]"
-                style={{
-                  backgroundColor: 'transparent',
-                  borderColor: 'var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = 'var(--text-primary)';
-                  e.currentTarget.style.color = 'var(--bg-primary)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = 'var(--text-primary)';
-                }}
+                style={{ color: 'rgba(251,247,239,0.45)', transition: 'color 0.25s' }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--gold-soft)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'rgba(251,247,239,0.45)'; }}
               >
-                <span>Admin Dashboard</span>
-                <span>&rarr;</span>
+                Admin Dashboard
               </Link>
             </div>
           </div>
+        ) : (
+          /* ─── Standard Footer ─── */
+          <>
+            <div className="footer-grid">
+              {/* Brand */}
+              <div className="footer-brand">
+                <span className="brand-word">ADA</span>
+                <p>An Atelier of Destiny and Arts — a fairy-touched gallery for student work in every medium, built one stained-glass door at a time.</p>
+              </div>
 
-          {/* Bottom Bar */}
-          <div
-            className="mt-12 pt-8 text-center border-t"
-            style={{ borderColor: 'var(--border-subtle)' }}
-          >
-            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              &copy; {currentYear} ADA — Atelier of Destiny and Arts. All works remain property of their creators.
-            </p>
-          </div>
-        </div>
-      )}
+              <div>
+                <h4>Explore</h4>
+                <Link to="/">Home</Link>
+                <Link to="/#categories">Gallery</Link>
+                <Link to="/about">About</Link>
+              </div>
+
+              <div>
+                <h4>About</h4>
+                <Link to="/about">Our Story</Link>
+                <Link to="/#categories">Browse Mediums</Link>
+              </div>
+
+              {/* Administration */}
+              <div>
+                <h4>Administration</h4>
+                <p style={{ marginBottom: '12px' }}>Authorized creators can access the dashboard to manage artworks and reviews.</p>
+                <Link
+                  to="/admin"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '8px 18px',
+                    borderRadius: '999px',
+                    border: '1px solid rgba(251,247,239,0.25)',
+                    fontSize: '0.72rem',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(251,247,239,0.75)',
+                    transition: 'border-color 0.25s, color 0.25s, background 0.25s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--gold)';
+                    e.currentTarget.style.color = 'var(--gold)';
+                    e.currentTarget.style.background = 'rgba(199,160,92,0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = 'rgba(251,247,239,0.25)';
+                    e.currentTarget.style.color = 'rgba(251,247,239,0.75)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  <span>Dashboard</span>
+                  <span>&rarr;</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="footer-bottom">
+              <span>&copy; {currentYear} ADA — Atelier of Destiny and Arts. All rights reserved.</span>
+              <div className="footer-socials">
+                <a href="#" aria-label="Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="3" y="3" width="18" height="18" rx="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="1"/>
+                  </svg>
+                </a>
+                <a href="#" aria-label="Pinterest">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M9 17c1-3 1-7 1-9a2 2 0 1 1 4 0c0 1.5-1 3-1 5 0 1.5 1 2 2 1"/>
+                  </svg>
+                </a>
+                <a href="/contact" aria-label="Email">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <path d="M3 7l9 6 9-6"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </footer>
   );
 }
