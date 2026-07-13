@@ -108,9 +108,9 @@ export default function HomePage() {
         const dbCats = await getCategories();
         if (dbCats && dbCats.length > 0) {
           finalCategories = categories.map((localConfig) => {
-            const dbCat = dbCats.find((c) => c.id === localConfig.id) || {};
+            const dbCat = dbCats.find((c) => c.slug === localConfig.slug) || {};
             return {
-              id: localConfig.id,
+              id: dbCat.id || localConfig.id,
               slug: localConfig.slug,
               name: dbCat.name || localConfig.name,
               description: dbCat.description || localConfig.description,

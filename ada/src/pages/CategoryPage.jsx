@@ -6,7 +6,7 @@ import { getArtworksByCategory } from '../services/artworks.js';
 import { getCategoryFeedback, submitCategoryFeedback } from '../services/feedback.js';
 import ArtworkCard from '../components/gallery/ArtworkCard.jsx';
 import ArtworkModal from '../components/gallery/ArtworkModal.jsx';
-import { getCategoryById } from '../services/categories.js';
+import { getCategoryBySlug } from '../services/categories.js';
 import FairyDust from '../components/ui/FairyDust.jsx';
 
 function parseCategoryName(fullName) {
@@ -50,23 +50,27 @@ export default function CategoryPage() {
     const loadData = async () => {
       let fetchedArtworks = [];
       let fetchedFeedback = [];
+      let activeCatId = category.id;
 
       try {
         try {
-          const fetchedCat = await getCategoryById(category.id);
-          if (fetchedCat) setDbCategory(fetchedCat);
+          const fetchedCat = await getCategoryBySlug(category.slug);
+          if (fetchedCat) {
+            setDbCategory(fetchedCat);
+            activeCatId = fetchedCat.id;
+          }
         } catch (_e) {
-          console.warn('Failed to fetch category details from Supabase');
+          console.warn('Failed to fetch category details from Supabase by slug');
         }
 
         try {
-          fetchedArtworks = await getArtworksByCategory(category.id);
+          fetchedArtworks = await getArtworksByCategory(activeCatId);
         } catch (_e) {
           console.warn('Failed to fetch from Supabase, using mock fallback artworks');
         }
 
         try {
-          fetchedFeedback = await getCategoryFeedback(category.id);
+          fetchedFeedback = await getCategoryFeedback(activeCatId);
         } catch (_e) {
           console.warn('Failed to fetch category feedback from Supabase');
         }
@@ -105,17 +109,19 @@ export default function CategoryPage() {
     if (!newFeedback.trim() || isSubmittingFeedback) return;
     setIsSubmittingFeedback(true);
 
+    const targetCatId = dbCategory?.id || category.id;
+
     const feedbackObject = {
       id: `local-cat-feedback-${Date.now()}`,
-      category_id: category.id,
+      category_id: targetCatId,
       comment_text: newFeedback.trim(),
       created_at: new Date().toISOString()
     };
 
     try {
       try {
-        await submitCategoryFeedback(category.id, newFeedback.trim());
-        const freshFeedback = await getCategoryFeedback(category.id);
+        await submitCategoryFeedback(targetCatId, newFeedback.trim());
+        const freshFeedback = await getCategoryFeedback(targetCatId);
         const localFeedback = JSON.parse(localStorage.getItem(`cat_feedback_${category.slug}`) || '[]');
         setFeedbackList([...localFeedback, ...freshFeedback].sort(
           (a, b) => new Date(b.created_at) - new Date(a.created_at)
@@ -202,7 +208,7 @@ export default function CategoryPage() {
         </div>
         <div style={{ position: 'relative', zIndex: 10, maxWidth: '1180px', margin: '0 auto', padding: '0 24px' }}>
           {(() => {
-            const { main, sub } = parseCategoryName(category.name);
+            const { main, sub } = parseCategoryName(dbCategory?.name || category.name);
             return (
               <div style={{ marginBottom: '24px' }}>
                 <h1 style={{
@@ -236,7 +242,7 @@ export default function CategoryPage() {
             lineHeight: 1.75,
             color: 'var(--ink-soft)',
           }}>
-            {dbCategory?.expanded_description || category?.expanded_description || category?.description}
+            {dbCategory?.expanded_description || dbCategory?.description || category?.expanded_description || category?.description}
           </p>
         </div>
       </section>
