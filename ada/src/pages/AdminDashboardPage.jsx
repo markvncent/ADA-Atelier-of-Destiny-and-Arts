@@ -113,10 +113,10 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Merge local config (icons/display copy) with DB data, matched by
-  // slug — NOT id, since the static config's id is never a real DB id.
   const mergedCategories = dbCategories.map((dbCat) => {
-    const localCat = staticCategories.find((c) => c.slug === dbCat.slug);
+    const localCat = staticCategories.find(
+      (c) => c.id === dbCat.id || c.slug === dbCat.slug || c.slug === dbCat.medium_type
+    );
     return localCat ? { ...localCat, ...dbCat } : dbCat;
   });
 

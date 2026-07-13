@@ -25,9 +25,9 @@ export default function HomePage() {
             return {
               id: localConfig.id,
               slug: localConfig.slug,
-              name: dbCat.name && !dbCat.name.includes('Silid-') ? dbCat.name : localConfig.name,
-              description: dbCat.description && !dbCat.description.includes('Silid-') && !dbCat.description.includes('silid-') ? dbCat.description : localConfig.description,
-              expanded_description: dbCat.expanded_description && !dbCat.expanded_description.includes('Silid-') ? dbCat.expanded_description : localConfig.expanded_description,
+              name: dbCat.name || localConfig.name,
+              description: dbCat.description || localConfig.description,
+              expanded_description: dbCat.expanded_description || localConfig.expanded_description,
               icon: localConfig.icon || '🎨',
               gradient: localConfig.gradient,
               cover_image_url: dbCat.cover_image_url || localConfig.cover_image_url,
@@ -171,7 +171,7 @@ export default function HomePage() {
               </h1>
               <p className="tagline">Where Creativity Blossoms and Destinies Unfold</p>
               <p className="lede">
-                Step through seven doors of a fairy-touched gallery, where stained glass holds the light
+                Step through five doors of a fairy-touched gallery, where stained glass holds the light
                 and every artwork waits with a story of its own to tell.
               </p>
               <div className="hero-actions">
@@ -314,7 +314,7 @@ export default function HomePage() {
         <div className="container" style={{ position: 'relative', zIndex: 10 }}>
           <ScrollRevealSection>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <span className="eyebrow" style={{ display: 'inline-flex', marginBottom: '12px' }}>Seven Doors, Seven Mediums</span>
+              <span className="eyebrow" style={{ display: 'inline-flex', marginBottom: '12px' }}>Five Doors, Five Mediums</span>
               <h2 style={{
                 fontFamily: "'Playfair Display', serif",
                 fontSize: 'clamp(1.7rem, 2.6vw, 2.3rem)',
