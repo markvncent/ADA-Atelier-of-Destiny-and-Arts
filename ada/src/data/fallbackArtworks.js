@@ -1,5 +1,5 @@
 /**
- * Pre-populated fallback mock artworks matching the Haraya Creative Archive layout.
+ * Pre-populated fallback mock artworks matching the ADA Creative Archive layout.
  * These display if no database entries are found in Supabase.
  * Stock images have been removed so only database-synced images are loaded.
  */
@@ -92,7 +92,7 @@ export const fallbackArtworks = {
     {
       id: 'mock-writing-1',
       title: 'Group Members & Instructor Tribute (Written)',
-      description: 'A compiled written tribute and introduction page dedicated to the creators and the guiding subject instructor behind the Haraya Creative Archive.',
+      description: 'A compiled written tribute and introduction page dedicated to the creators and the guiding subject instructor behind the Atelier of Destiny & Arts Archive.',
       media_url: null,
       media_type: 'image',
       thumbnail_url: null,

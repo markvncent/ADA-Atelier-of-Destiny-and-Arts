@@ -70,7 +70,7 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-neutral-500/30"
+          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-[var(--mauve)]/30 focus:border-[var(--mauve)]"
           style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
         />
       </div>
@@ -84,7 +84,7 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows="2"
-          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 resize-none focus:ring-1 focus:ring-neutral-500/30"
+          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 resize-none focus:ring-1 focus:ring-[var(--mauve)]/30 focus:border-[var(--mauve)]"
           style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
         />
       </div>
@@ -98,7 +98,7 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
           value={expandedDescription}
           onChange={(e) => setExpandedDescription(e.target.value)}
           rows="4"
-          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 resize-none focus:ring-1 focus:ring-neutral-500/30"
+          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 resize-none focus:ring-1 focus:ring-[var(--mauve)]/30 focus:border-[var(--mauve)]"
           style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
         />
       </div>
@@ -113,7 +113,7 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
           value={coverImageUrl}
           onChange={(e) => setCoverImageUrl(e.target.value)}
           placeholder="https://..."
-          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-neutral-500/30"
+          className="w-full rounded-lg border px-3 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-[var(--mauve)]/30 focus:border-[var(--mauve)]"
           style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
         />
         {coverImageUrl && (
@@ -125,12 +125,22 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
 
       {/* Error / Success */}
       {error && (
-        <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-3 py-2 text-xs text-red-400">
+        <div className="rounded-lg border px-3 py-2 text-xs font-semibold"
+             style={{
+               backgroundColor: '#FEF2F2',
+               borderColor: '#FCA5A5',
+               color: '#B91C1C'
+             }}>
           {error}
         </div>
       )}
       {success && (
-        <div className="rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 text-xs text-emerald-400">
+        <div className="rounded-lg border px-3 py-2 text-xs font-semibold"
+             style={{
+               backgroundColor: '#ECFDF5',
+               borderColor: '#A7F3D0',
+               color: '#047857'
+             }}>
           Category updated successfully!
         </div>
       )}
@@ -141,8 +151,8 @@ export default function CategoryForm({ category, onSaved, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg border px-4 py-2 text-xs font-medium transition-all duration-200 hover:bg-white/5"
-            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+            className="rounded-lg border px-4 py-2 text-xs font-semibold transition-all duration-200 hover:bg-theme-surface-hover"
+            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
           >
             Cancel
           </button>

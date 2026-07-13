@@ -61,19 +61,34 @@ export default function AdminPage() {
           }}
         />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
+        <div className="relative z-10 mx-auto max-w-7xl px-6 text-center flex flex-col items-center">
+          <div className="mb-6">
+            <svg viewBox="0 0 40 40" className="w-16 h-16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="headerGlow" cx="50%" cy="30%" r="75%">
+                  <stop offset="0%" stopColor="#E0C48C"/>
+                  <stop offset="55%" stopColor="#DDA785"/>
+                  <stop offset="100%" stopColor="#7C6072"/>
+                </radialGradient>
+              </defs>
+              <path d="M8,34 L8,18 C8,9 14,4 20,4 C26,4 32,9 32,18 L32,34 Z" fill="url(#headerGlow)" stroke="#C7A05C" strokeWidth="1.4"/>
+              <line x1="20" y1="18" x2="20" y2="34" stroke="#C7A05C" strokeWidth="1"/>
+              <circle cx="20" cy="18" r="2" fill="#C7A05C"/>
+            </svg>
+          </div>
+
           <h1
-            className="mb-4 text-4xl font-bold sm:text-5xl"
+            className="mb-2 text-4xl font-bold sm:text-5xl font-heading"
             style={{ color: "var(--text-primary)" }}
           >
-            Admin Access
+            Atelier of Destiny &amp; Arts
           </h1>
 
           <p
-            className="mx-auto max-w-xl text-lg"
-            style={{ color: "var(--text-muted)" }}
+            className="mx-auto max-w-xl text-lg font-medium"
+            style={{ color: "var(--mauve-deep)" }}
           >
-            Enter your access code to manage gallery content.
+            Admin Access Portal
           </p>
         </div>
       </section>
@@ -86,6 +101,7 @@ export default function AdminPage() {
             style={{
               borderColor: "var(--border-subtle)",
               backgroundColor: "var(--bg-surface)",
+              boxShadow: "var(--shadow-card)",
             }}
           >
             <div className="mb-6 text-center">
@@ -123,7 +139,7 @@ export default function AdminPage() {
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="••••••••"
                   autoComplete="off"
-                  className="w-full rounded-xl border px-4 py-3.5 text-center text-sm tracking-[0.3em] outline-none transition-all duration-300"
+                  className="w-full rounded-xl border px-4 py-3.5 text-center text-sm tracking-[0.3em] outline-none transition-all duration-300 focus:border-[var(--mauve)] focus:ring-1 focus:ring-[var(--mauve)]/30"
                   style={{
                     backgroundColor: "var(--bg-primary)",
                     borderColor: "var(--border-subtle)",
@@ -132,7 +148,12 @@ export default function AdminPage() {
                 />
 
                 {error && (
-                  <div className="rounded-lg bg-red-100 px-4 py-2 text-center text-sm text-red-700">
+                  <div className="rounded-xl border px-4 py-3 text-center text-sm font-semibold"
+                       style={{
+                         backgroundColor: '#FEF2F2',
+                         borderColor: '#FCA5A5',
+                         color: '#B91C1C'
+                       }}>
                     {error}
                   </div>
                 )}
@@ -140,10 +161,12 @@ export default function AdminPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-xl px-8 py-3.5 text-sm font-semibold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60 border border-theme"
+                  className="w-full rounded-xl px-8 py-3.5 text-sm font-semibold transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-60 border"
                   style={{
-                    backgroundColor: "var(--text-primary)",
-                    color: "var(--bg-primary)",
+                    background: "linear-gradient(135deg, var(--mauve), var(--mauve-deep))",
+                    borderColor: "var(--mauve-deep)",
+                    color: "var(--cream)",
+                    boxShadow: "var(--shadow-card)",
                   }}
                 >
                   {loading ? "Verifying..." : "Unlock Admin Mode"}

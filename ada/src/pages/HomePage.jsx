@@ -108,14 +108,14 @@ export default function HomePage() {
             zIndex: 10
           }} title={cat.name}>
             <svg width="18" height="24" viewBox="0 0 40 50" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>
-              <path d="M4,46 L4,18 C4,9 12,4 20,4 C28,4 36,9 36,18 L36,46 Z"/>
-              <line x1="20" y1="18" x2="20" y2="46"/>
-              <circle cx="20" cy="18" r="2" fill="currentColor"/>
+              <path d="M4,46 L4,18 C4,9 12,4 20,4 C28,4 36,9 36,18 L36,46 Z" />
+              <line x1="20" y1="18" x2="20" y2="46" />
+              <circle cx="20" cy="18" r="2" fill="currentColor" />
             </svg>
           </div>
 
           {/* Stained-Glass Window Frame housing the category picture */}
-          <div 
+          <div
             style={{
               width: '180px',
               height: '240px',
@@ -178,7 +178,7 @@ export default function HomePage() {
                 <a className="btn btn-primary" href="#categories">
                   Enter the Gallery
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                    <path d="M5 12h14M13 6l6 6-6 6"/>
+                    <path d="M5 12h14M13 6l6 6-6 6" />
                   </svg>
                 </a>
                 <Link className="link-quiet" to="/about">The story behind ADA →</Link>
@@ -192,76 +192,76 @@ export default function HomePage() {
                 <svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg" aria-label="An illustrated stained glass door, the emblem of ADA">
                   <defs>
                     <radialGradient id="doorGlow" cx="50%" cy="24%" r="80%">
-                      <stop offset="0%" stopColor="#F3E3BE"/>
-                      <stop offset="42%" stopColor="#DDA785"/>
-                      <stop offset="100%" stopColor="#7C6072"/>
+                      <stop offset="0%" stopColor="#F3E3BE" />
+                      <stop offset="42%" stopColor="#DDA785" />
+                      <stop offset="100%" stopColor="#7C6072" />
                     </radialGradient>
                     <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#F3E3BE" stopOpacity="0.9"/>
-                      <stop offset="100%" stopColor="#F3E3BE" stopOpacity="0"/>
+                      <stop offset="0%" stopColor="#F3E3BE" stopOpacity="0.9" />
+                      <stop offset="100%" stopColor="#F3E3BE" stopOpacity="0" />
                     </radialGradient>
                     <clipPath id="doorClip">
-                      <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z"/>
+                      <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z" />
                     </clipPath>
                   </defs>
 
                   <g clipPath="url(#doorClip)">
-                    <rect x="0" y="0" width="400" height="560" fill="url(#doorGlow)"/>
+                    <rect x="0" y="0" width="400" height="560" fill="url(#doorGlow)" />
                     {/* Vertical panel bands */}
-                    <rect x="54" y="0" width="73" height="560" fill="#CBD4A9" opacity="0.32"/>
-                    <rect x="127" y="0" width="73" height="560" fill="#DDA785" opacity="0.22"/>
-                    <rect x="200" y="0" width="73" height="560" fill="#A78998" opacity="0.26"/>
-                    <rect x="273" y="0" width="73" height="560" fill="#A6B37B" opacity="0.26"/>
+                    <rect x="54" y="0" width="73" height="560" fill="#CBD4A9" opacity="0.32" />
+                    <rect x="127" y="0" width="73" height="560" fill="#DDA785" opacity="0.22" />
+                    <rect x="200" y="0" width="73" height="560" fill="#A78998" opacity="0.26" />
+                    <rect x="273" y="0" width="73" height="560" fill="#A6B37B" opacity="0.26" />
                     {/* Sunburst fan wedges */}
-                    <polygon points="200,210 54,210 127,120" fill="#CBD4A9" opacity="0.35"/>
-                    <polygon points="200,210 127,120 163,68" fill="#DDA785" opacity="0.3"/>
-                    <polygon points="200,210 163,68 200,50" fill="#E0C48C" opacity="0.4"/>
-                    <polygon points="200,210 200,50 237,68" fill="#DDA785" opacity="0.3"/>
-                    <polygon points="200,210 237,68 273,120" fill="#CBD4A9" opacity="0.35"/>
-                    <polygon points="200,210 273,120 346,210" fill="#A78998" opacity="0.3"/>
-                    <circle cx="200" cy="210" r="46" fill="url(#centerGlow)"/>
+                    <polygon points="200,210 54,210 127,120" fill="#CBD4A9" opacity="0.35" />
+                    <polygon points="200,210 127,120 163,68" fill="#DDA785" opacity="0.3" />
+                    <polygon points="200,210 163,68 200,50" fill="#E0C48C" opacity="0.4" />
+                    <polygon points="200,210 200,50 237,68" fill="#DDA785" opacity="0.3" />
+                    <polygon points="200,210 237,68 273,120" fill="#CBD4A9" opacity="0.35" />
+                    <polygon points="200,210 273,120 346,210" fill="#A78998" opacity="0.3" />
+                    <circle cx="200" cy="210" r="46" fill="url(#centerGlow)" />
                   </g>
 
                   {/* Lead lines */}
                   <g fill="none" stroke="#C7A05C" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z"/>
-                    <line x1="54" y1="210" x2="346" y2="210"/>
-                    <line x1="127" y1="210" x2="127" y2="540"/>
-                    <line x1="200" y1="210" x2="200" y2="540"/>
-                    <line x1="273" y1="210" x2="273" y2="540"/>
-                    <line x1="200" y1="210" x2="127" y2="120"/>
-                    <line x1="200" y1="210" x2="163" y2="68"/>
-                    <line x1="200" y1="210" x2="200" y2="50"/>
-                    <line x1="200" y1="210" x2="237" y2="68"/>
-                    <line x1="200" y1="210" x2="273" y2="120"/>
+                    <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z" />
+                    <line x1="54" y1="210" x2="346" y2="210" />
+                    <line x1="127" y1="210" x2="127" y2="540" />
+                    <line x1="200" y1="210" x2="200" y2="540" />
+                    <line x1="273" y1="210" x2="273" y2="540" />
+                    <line x1="200" y1="210" x2="127" y2="120" />
+                    <line x1="200" y1="210" x2="163" y2="68" />
+                    <line x1="200" y1="210" x2="200" y2="50" />
+                    <line x1="200" y1="210" x2="237" y2="68" />
+                    <line x1="200" y1="210" x2="273" y2="120" />
                   </g>
 
                   {/* Threshold */}
                   <g stroke="#C7A05C" strokeWidth="1.6" opacity="0.55">
-                    <line x1="70" y1="528" x2="330" y2="528"/>
-                    <line x1="82" y1="536" x2="318" y2="536"/>
+                    <line x1="70" y1="528" x2="330" y2="528" />
+                    <line x1="82" y1="536" x2="318" y2="536" />
                   </g>
 
                   {/* Door ring handle */}
-                  <circle cx="300" cy="360" r="9" fill="none" stroke="#C7A05C" strokeWidth="3"/>
-                  <line x1="300" y1="369" x2="300" y2="380" stroke="#C7A05C" strokeWidth="3" strokeLinecap="round"/>
+                  <circle cx="300" cy="360" r="9" fill="none" stroke="#C7A05C" strokeWidth="3" />
+                  <line x1="300" y1="369" x2="300" y2="380" stroke="#C7A05C" strokeWidth="3" strokeLinecap="round" />
 
                   {/* Center jewel */}
-                  <circle cx="200" cy="210" r="7" fill="#E0C48C" stroke="#C7A05C" strokeWidth="1.4"/>
+                  <circle cx="200" cy="210" r="7" fill="#E0C48C" stroke="#C7A05C" strokeWidth="1.4" />
 
                   {/* Floral vine */}
                   <g id="vineSrc" fill="none" stroke="#A6B37B" strokeWidth="2" strokeLinecap="round">
-                    <path d="M40,222 C10,192 16,144 52,118 C36,150 34,180 45,204"/>
-                    <circle cx="52" cy="118" r="4" fill="#DDA785" stroke="none"/>
-                    <circle cx="30" cy="160" r="3" fill="#C7A05C" stroke="none"/>
-                    <circle cx="42" cy="200" r="3" fill="#CBD4A9" stroke="none"/>
+                    <path d="M40,222 C10,192 16,144 52,118 C36,150 34,180 45,204" />
+                    <circle cx="52" cy="118" r="4" fill="#DDA785" stroke="none" />
+                    <circle cx="30" cy="160" r="3" fill="#C7A05C" stroke="none" />
+                    <circle cx="42" cy="200" r="3" fill="#CBD4A9" stroke="none" />
                   </g>
-                  <use href="#vineSrc" transform="translate(400,0) scale(-1,1)"/>
+                  <use href="#vineSrc" transform="translate(400,0) scale(-1,1)" />
 
                   {/* Ambient sparkles */}
                   <g fill="#C7A05C">
-                    <path d="M336,96 l4,11 11,4 -11,4 -4,11 -4,-11 -11,-4 11,-4 Z" opacity="0.85"/>
-                    <path d="M66,470 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" opacity="0.7"/>
+                    <path d="M336,96 l4,11 11,4 -11,4 -4,11 -4,-11 -11,-4 11,-4 Z" opacity="0.85" />
+                    <path d="M66,470 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" opacity="0.7" />
                   </g>
                 </svg>
               </div>
@@ -281,34 +281,34 @@ export default function HomePage() {
         <ConstellationBackground />
         {/* Left background watermark constellation */}
         <svg width="240" height="340" viewBox="0 0 240 340" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', left: '2%', top: '15%', opacity: 0.08, pointerEvents: 'none', zIndex: 1 }} className="hidden lg:block">
-          <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none"/>
-          <line x1="120" y1="30" x2="60" y2="100" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="120" y1="30" x2="180" y2="100" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="60" y1="100" x2="120" y2="160" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="180" y1="100" x2="120" y2="160" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="120" y1="160" x2="120" y2="280" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="60" y1="100" x2="60" y2="220" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="180" y1="100" x2="180" y2="220" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <path d="M120,20 L123,27 L130,30 L123,33 L120,40 L117,33 L110,30 L117,27 Z" fill="var(--gold)"/>
-          <circle cx="60" cy="100" r="3" fill="var(--gold)"/>
-          <circle cx="180" cy="100" r="3" fill="var(--gold)"/>
-          <path d="M120,150 L123,157 L130,160 L123,163 L120,170 L117,163 L110,160 L117,157 Z" fill="var(--gold)"/>
-          <circle cx="60" cy="220" r="3" fill="var(--gold)"/>
-          <circle cx="180" cy="220" r="3" fill="var(--gold)"/>
-          <circle cx="120" cy="280" r="4" fill="var(--gold)"/>
+          <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+          <line x1="120" y1="30" x2="60" y2="100" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="120" y1="30" x2="180" y2="100" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="60" y1="100" x2="120" y2="160" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="180" y1="100" x2="120" y2="160" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="120" y1="160" x2="120" y2="280" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="60" y1="100" x2="60" y2="220" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="180" y1="100" x2="180" y2="220" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <path d="M120,20 L123,27 L130,30 L123,33 L120,40 L117,33 L110,30 L117,27 Z" fill="var(--gold)" />
+          <circle cx="60" cy="100" r="3" fill="var(--gold)" />
+          <circle cx="180" cy="100" r="3" fill="var(--gold)" />
+          <path d="M120,150 L123,157 L130,160 L123,163 L120,170 L117,163 L110,160 L117,157 Z" fill="var(--gold)" />
+          <circle cx="60" cy="220" r="3" fill="var(--gold)" />
+          <circle cx="180" cy="220" r="3" fill="var(--gold)" />
+          <circle cx="120" cy="280" r="4" fill="var(--gold)" />
         </svg>
 
         {/* Right background watermark constellation */}
         <svg width="240" height="340" viewBox="0 0 240 340" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', right: '2%', bottom: '10%', opacity: 0.08, pointerEvents: 'none', zIndex: 1 }} className="hidden lg:block">
-          <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none"/>
-          <line x1="40" y1="120" x2="200" y2="120" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="120" y1="30" x2="120" y2="280" stroke="var(--gold)" strokeWidth="1"/>
-          <line x1="40" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <line x1="200" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3"/>
-          <path d="M120,20 L122,25 L127,27 L122,29 L120,34 L118,29 L113,27 L118,25 Z" fill="var(--gold)"/>
-          <circle cx="40" cy="120" r="3.5" fill="var(--gold)"/>
-          <circle cx="200" cy="120" r="3.5" fill="var(--gold)"/>
-          <path d="M120,195 L123,202 L130,205 L123,208 L120,215 L117,208 L110,205 L117,202 Z" fill="var(--gold)"/>
+          <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
+          <line x1="40" y1="120" x2="200" y2="120" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="120" y1="30" x2="120" y2="280" stroke="var(--gold)" strokeWidth="1" />
+          <line x1="40" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <line x1="200" y1="120" x2="120" y2="200" stroke="var(--gold)" strokeWidth="1" strokeDasharray="3 3" />
+          <path d="M120,20 L122,25 L127,27 L122,29 L120,34 L118,29 L113,27 L118,25 Z" fill="var(--gold)" />
+          <circle cx="40" cy="120" r="3.5" fill="var(--gold)" />
+          <circle cx="200" cy="120" r="3.5" fill="var(--gold)" />
+          <path d="M120,195 L123,202 L130,205 L123,208 L120,215 L117,208 L110,205 L117,202 Z" fill="var(--gold)" />
         </svg>
 
         <div className="container" style={{ position: 'relative', zIndex: 10 }}>
@@ -362,7 +362,7 @@ export default function HomePage() {
                 fontFamily: "'Playfair Display', serif",
                 fontSize: 'clamp(1.7rem, 2.6vw, 2.3rem)',
                 marginBottom: '20px',
-              }}>A quiet room for loud ideas</h2>
+              }}>Inspired by the elegance of Art Nouveau</h2>
               <p style={{
                 color: 'var(--ink-soft)',
                 fontSize: '1rem',
@@ -370,7 +370,7 @@ export default function HomePage() {
                 maxWidth: '56ch',
                 marginBottom: '24px',
               }}>
-                ADA began as one question: where does student work go once the grading is done? This is that place — an open, growing archive where photography sits beside film, and a poem is filed with the same care as a painting.
+                The quiet magic of nature, and the belief that every person journeys through different seasons of life, ADA invites visitors into a world where imagination and emotion intertwine.
               </p>
               <p style={{
                 fontFamily: "'Playfair Display', serif",

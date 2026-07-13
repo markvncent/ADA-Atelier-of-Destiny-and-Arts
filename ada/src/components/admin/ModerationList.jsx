@@ -208,24 +208,33 @@ export default function ModerationList() {
     });
   };
 
-  const renderStars = (score) => '★'.repeat(score) + '☆'.repeat(5 - score);
+  const renderStars = (score) => (
+    <span className="text-[var(--accent-gold)] tracking-wide text-sm">
+      {'★'.repeat(score)}
+      <span className="opacity-25">{'★'.repeat(5 - score)}</span>
+    </span>
+  );
 
   return (
     <div className="space-y-5">
       {/* Sub-Tab Navigation */}
-      <div className="flex gap-1 rounded-xl p-1 border" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-subtle)' }}>
+      <div className="flex gap-1 rounded-xl p-1 border" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}>
         {SUB_TABS.map((tab) => (
           <button
-          type="button"
+            type="button"
             key={tab.key}
             onClick={() => setActiveSubTab(tab.key)}
             className={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-all duration-200 ${
-              activeSubTab === tab.key ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 shadow-sm' : 'hover:bg-neutral-100 dark:hover:bg-neutral-800/30'
+              activeSubTab === tab.key ? 'shadow-sm border' : 'hover:bg-theme-surface-hover'
             }`}
-            style={{ color: activeSubTab === tab.key ? undefined : 'var(--text-muted)' }}
+            style={{
+              backgroundColor: activeSubTab === tab.key ? 'var(--mauve-deep)' : 'transparent',
+              borderColor: activeSubTab === tab.key ? 'var(--mauve-deep)' : 'transparent',
+              color: activeSubTab === tab.key ? 'var(--cream)' : 'var(--text-secondary)'
+            }}
           >
             {tab.label}
-            <span className="ml-1.5 text-[10px] opacity-60">
+            <span className="ml-1.5 text-[10px] opacity-70">
               ({tab.key === 'artwork_comments' ? artworkFeedback.length : tab.key === 'category_comments' ? categoryFeedback.length : ratings.length})
             </span>
           </button>
@@ -302,7 +311,7 @@ export default function ModerationList() {
                 ratings.map((rt) => (
                   <FeedbackRow
                     key={rt.id}
-                    text={<span className="text-neutral-400 dark:text-neutral-200 tracking-wide">{renderStars(rt.score)}</span>}
+                    text={renderStars(rt.score)}
                     meta={rt.artworks?.title || 'Unknown artwork'}
                     subMeta={`Score: ${rt.score}/5`}
                     date={formatDate(rt.created_at)}
@@ -340,7 +349,10 @@ function StarPicker({ score, onChange }) {
           key={n}
           type="button"
           onClick={() => onChange(n)}
-          className={`text-lg leading-none ${n <= score ? 'text-neutral-400 dark:text-neutral-200' : 'text-neutral-300/30'}`}
+          className="text-lg leading-none transition-all duration-200 hover:scale-110"
+          style={{
+            color: n <= score ? 'var(--accent-gold)' : 'var(--border-subtle)',
+          }}
         >
           ★
         </button>
@@ -357,8 +369,8 @@ function FeedbackRow({
 }) {
   return (
     <div
-      className="flex items-start gap-4 rounded-xl border p-4 transition-all duration-200 hover:border-white/10"
-      style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border-subtle)' }}
+      className="flex items-start gap-4 rounded-xl border p-4 transition-all duration-200 hover:border-[var(--mauve)]"
+      style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}
     >
       <div className="flex-1 min-w-0">
         {isEditing ? (
@@ -389,19 +401,19 @@ function FeedbackRow({
         {isEditing ? (
           <>
             <button
-            type="button"
+              type="button"
               onClick={onSaveEdit}
               disabled={busy}
-              className="rounded-lg border border-green-500/20 bg-green-500/5 px-2.5 py-1.5 text-[11px] font-medium text-green-400 hover:bg-green-500/15 disabled:opacity-40"
+              className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1.5 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 hover:text-emerald-800 disabled:opacity-40"
             >
               {busy ? '...' : 'Save'}
             </button>
             <button
-            type="button"
+              type="button"
               onClick={onCancelEdit}
               disabled={busy}
-              className="rounded-lg border px-2.5 py-1.5 text-[11px] font-medium hover:bg-white/5 disabled:opacity-40"
-              style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+              className="rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold hover:bg-theme-surface-hover disabled:opacity-40"
+              style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
             >
               Cancel
             </button>
@@ -409,17 +421,18 @@ function FeedbackRow({
         ) : (
           <>
             <button
-            type="button"
+              type="button"
               onClick={onEdit}
-              className="rounded-lg border border-neutral-500/20 bg-neutral-500/5 px-2.5 py-1.5 text-[11px] font-medium text-neutral-400 hover:bg-neutral-500/15"
+              className="rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold hover:bg-theme-surface-hover hover:border-[var(--mauve)]"
+              style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
             >
               Edit
             </button>
             <button
-            type="button"
+              type="button"
               onClick={onDelete}
               disabled={busy}
-              className="rounded-lg border border-red-500/20 bg-red-500/5 px-2.5 py-1.5 text-[11px] font-medium text-red-400 hover:bg-red-500/15 disabled:opacity-40"
+              className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-[11px] font-semibold text-red-600 hover:bg-red-100 hover:text-red-700 disabled:opacity-40"
             >
               {busy ? '...' : 'Delete'}
             </button>

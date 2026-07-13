@@ -130,18 +130,35 @@ export default function AdminDashboardPage() {
         {/* Sidebar Header / Branding */}
         <div className="px-5 py-5 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
           <div className="flex items-center gap-2.5">
-            <span className="text-xl font-kingston" style={{ color: 'var(--text-primary)' }}>H</span>
+            <svg viewBox="0 0 40 40" className="w-8 h-8 shrink-0" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="sidebarGlow" cx="50%" cy="30%" r="75%">
+                  <stop offset="0%" stopColor="#E0C48C"/>
+                  <stop offset="55%" stopColor="#DDA785"/>
+                  <stop offset="100%" stopColor="#7C6072"/>
+                </radialGradient>
+              </defs>
+              <path d="M8,34 L8,18 C8,9 14,4 20,4 C26,4 32,9 32,18 L32,34 Z" fill="url(#sidebarGlow)" stroke="#C7A05C" strokeWidth="1.4"/>
+              <line x1="20" y1="18" x2="20" y2="34" stroke="#C7A05C" strokeWidth="1"/>
+              <circle cx="20" cy="18" r="2" fill="#C7A05C"/>
+            </svg>
             <div>
-              <h1 className="text-sm font-bold leading-tight" style={{ color: 'var(--text-primary)' }}>
-                Haraya
+              <h1 className="text-sm font-bold leading-tight font-heading" style={{ color: 'var(--text-primary)', letterSpacing: '0.05em' }}>
+                ADA
               </h1>
-              <p className="text-[10px] leading-tight" style={{ color: 'var(--text-muted)' }}>
-                Admin Dashboard
+              <p className="text-[9px] leading-tight uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                Atelier of Destiny &amp; Arts
               </p>
             </div>
           </div>
-          <span className="mt-3 inline-block rounded-full bg-emerald-500/15 border border-emerald-500/25 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-            Admin Mode
+          <span className="mt-3 inline-block rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border"
+                style={{
+                  backgroundColor: 'rgba(124, 96, 114, 0.1)',
+                  borderColor: 'rgba(124, 96, 114, 0.2)',
+                  color: 'var(--mauve-deep)'
+                }}
+          >
+            Admin Dashboard
           </span>
         </div>
 
@@ -152,18 +169,23 @@ export default function AdminDashboardPage() {
               key={tab.key}
               type="button"
               onClick={() => setActiveTab(tab.key)}
-              className={`w-full flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 text-left ${
+              className={`w-full flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 text-left ${
                 activeTab === tab.key
-                  ? 'bg-neutral-800 text-white shadow-sm border border-neutral-700'
-                  : 'hover:bg-white/5'
+                  ? 'shadow-sm border'
+                  : 'hover:bg-theme-surface-hover'
               }`}
-              style={{ color: activeTab === tab.key ? undefined : 'var(--text-muted)' }}
+              style={{
+                backgroundColor: activeTab === tab.key ? 'var(--mauve-deep)' : 'transparent',
+                borderColor: activeTab === tab.key ? 'var(--mauve-deep)' : 'transparent',
+                color: activeTab === tab.key ? 'var(--cream)' : 'var(--text-secondary)'
+              }}
             >
               {/* Active indicator dot */}
               <span
-                className={`h-1.5 w-1.5 rounded-full shrink-0 transition-all duration-200 ${
-                  activeTab === tab.key ? 'bg-amber-500' : 'bg-neutral-700'
-                }`}
+                className="h-1.5 w-1.5 rounded-full shrink-0 transition-all duration-200"
+                style={{
+                  backgroundColor: activeTab === tab.key ? 'var(--accent-gold)' : 'var(--border-subtle)'
+                }}
               />
               {tab.label}
             </button>
@@ -175,8 +197,8 @@ export default function AdminDashboardPage() {
           <button
             type="button"
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-400"
-            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+            className="w-full flex items-center justify-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
           >
             Exit Admin Mode
           </button>
@@ -218,7 +240,7 @@ export default function AdminDashboardPage() {
                     value={selectedCategoryId}
                     disabled={loadingCategories}
                     onChange={(e) => setSelectedCategoryId(e.target.value)}
-                    className="rounded-xl border px-4 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-amber-500/30"
+                    className="rounded-xl border px-4 py-2.5 text-sm outline-none transition-all duration-200 focus:ring-1 focus:ring-[var(--mauve)]/30"
                     style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)', color: 'var(--text-primary)' }}
                   >
                     {loadingCategories && <option>Loading…</option>}
@@ -292,11 +314,11 @@ export default function AdminDashboardPage() {
                     return (
                       <div
                         key={art.id}
-                        className="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto_auto_auto] gap-3 sm:gap-4 items-center rounded-xl border p-4 sm:px-5 sm:py-3 transition-all duration-200 hover:border-white/10"
+                        className="grid grid-cols-1 sm:grid-cols-[auto_1fr_auto_auto_auto] gap-3 sm:gap-4 items-center rounded-xl border p-4 sm:px-5 sm:py-3 transition-all duration-200 hover:border-[var(--mauve)]"
                         style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-subtle)' }}
                       >
                         {/* Preview Thumbnail */}
-                        <div className="w-14 h-10 rounded-lg overflow-hidden bg-neutral-900 border border-white/5 shrink-0 flex items-center justify-center">
+                        <div className="w-14 h-10 rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 shrink-0 flex items-center justify-center">
                           {art.thumbnail_url || art.media_type === 'image' ? (
                             <img
                               src={art.thumbnail_url || art.media_url}
@@ -304,12 +326,12 @@ export default function AdminDashboardPage() {
                               className="h-full w-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-neutral-950">
-                              {art.media_type === 'audio' && <Music className="w-5 h-5 text-amber-500" />}
-                              {art.media_type === 'video' && <Video className="w-5 h-5 text-amber-500" />}
-                              {art.media_type === 'pdf' && <FileText className="w-5 h-5 text-amber-500" />}
-                              {art.media_type === 'text' && <AlignLeft className="w-5 h-5 text-amber-500" />}
-                              {art.media_type === 'sculpture' && <Shapes className="w-5 h-5 text-amber-500" />}
+                            <div className="w-full h-full flex items-center justify-center bg-neutral-200">
+                              {art.media_type === 'audio' && <Music className="w-5 h-5 text-[var(--accent-gold)]" />}
+                              {art.media_type === 'video' && <Video className="w-5 h-5 text-[var(--accent-gold)]" />}
+                              {art.media_type === 'pdf' && <FileText className="w-5 h-5 text-[var(--accent-gold)]" />}
+                              {art.media_type === 'text' && <AlignLeft className="w-5 h-5 text-[var(--accent-gold)]" />}
+                              {art.media_type === 'sculpture' && <Shapes className="w-5 h-5 text-[var(--accent-gold)]" />}
                             </div>
                           )}
                         </div>
@@ -333,8 +355,8 @@ export default function AdminDashboardPage() {
                         </span>
 
                         {/* Rating */}
-                        <span className="text-xs font-medium text-center w-16" style={{ color: 'var(--text-primary)' }}>
-                          <span className="text-amber-500">★</span> {avgRating > 0 ? avgRating : '—'}
+                        <span className="text-xs font-semibold text-center w-16" style={{ color: 'var(--text-primary)' }}>
+                          <span className="text-[var(--accent-gold)]">★</span> {avgRating > 0 ? avgRating : '—'}
                         </span>
 
                         {/* Actions */}
@@ -342,8 +364,8 @@ export default function AdminDashboardPage() {
                           <button
                             type="button"
                             onClick={() => { setEditingArtwork(art); setShowArtworkForm(true); }}
-                            className="rounded-lg border px-2.5 py-1.5 text-[11px] font-medium transition-all duration-200 hover:bg-white/5 hover:border-white/15"
-                            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+                            className="rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold transition-all duration-200 hover:bg-theme-surface-hover hover:border-[var(--mauve)]"
+                            style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}
                           >
                             Edit
                           </button>
@@ -351,7 +373,7 @@ export default function AdminDashboardPage() {
                             type="button"
                             onClick={() => handleDeleteArtwork(art)}
                             disabled={deletingArtworkId === art.id}
-                            className="rounded-lg border border-red-500/20 bg-red-500/5 px-2.5 py-1.5 text-[11px] font-medium text-red-400 transition-all duration-200 hover:bg-red-500/15 disabled:opacity-40"
+                            className="rounded-lg border border-red-200 bg-red-50 px-2.5 py-1.5 text-[11px] font-semibold text-red-600 transition-all duration-200 hover:bg-red-100 hover:text-red-700 disabled:opacity-40"
                           >
                             {deletingArtworkId === art.id ? '...' : 'Delete'}
                           </button>

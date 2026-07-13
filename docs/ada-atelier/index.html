@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADA — An Atelier of Destiny and Arts</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="brandmark">
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="navGlow" cx="50%" cy="30%" r="75%">
+            <stop offset="0%" stop-color="#E0C48C"/>
+            <stop offset="55%" stop-color="#DDA785"/>
+            <stop offset="100%" stop-color="#7C6072"/>
+          </radialGradient>
+        </defs>
+        <path d="M8,34 L8,18 C8,9 14,4 20,4 C26,4 32,9 32,18 L32,34 Z" fill="url(#navGlow)" stroke="#C7A05C" stroke-width="1.4"/>
+        <line x1="20" y1="18" x2="20" y2="34" stroke="#C7A05C" stroke-width="1"/>
+        <circle cx="20" cy="18" r="2" fill="#C7A05C"/>
+      </svg>
+      <span class="word">ADA<small>Atelier of Destiny &amp; Arts</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="artists.html">Artists</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="icon-btn" href="gallery.html" aria-label="Search the gallery" title="Explore">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+      <button class="nav-toggle icon-btn" aria-label="Menu">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="dust" data-count="10"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">An Atelier of Destiny and Arts</span>
+        <h1>Where art<br>meets <em>imagination</em>.</h1>
+        <p class="lede">Step through seven doors of a fairy-touched gallery, where stained glass holds the light and every artwork waits with a story of its own to tell.</p>
+        <div class="hero-actions">
+          <a href="gallery.html" class="btn btn-primary">
+            Enter the Gallery
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="about.html" class="link-quiet">The story behind ADA →</a>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <div class="door-wrap">
+          <div class="glow-behind"></div>
+          <svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg" aria-label="An illustrated stained glass door, the emblem of ADA">
+            <defs>
+              <radialGradient id="doorGlow" cx="50%" cy="24%" r="80%">
+                <stop offset="0%" stop-color="#F3E3BE"/>
+                <stop offset="42%" stop-color="#DDA785"/>
+                <stop offset="100%" stop-color="#7C6072"/>
+              </radialGradient>
+              <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#F3E3BE" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#F3E3BE" stop-opacity="0"/>
+              </radialGradient>
+              <clipPath id="doorClip">
+                <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z"/>
+              </clipPath>
+            </defs>
+
+            <g clip-path="url(#doorClip)">
+              <rect x="0" y="0" width="400" height="560" fill="url(#doorGlow)"/>
+              <!-- vertical panel bands -->
+              <rect x="54" y="0" width="73" height="560" fill="#CBD4A9" opacity="0.32"/>
+              <rect x="127" y="0" width="73" height="560" fill="#DDA785" opacity="0.22"/>
+              <rect x="200" y="0" width="73" height="560" fill="#A78998" opacity="0.26"/>
+              <rect x="273" y="0" width="73" height="560" fill="#A6B37B" opacity="0.26"/>
+              <!-- sunburst fan wedges -->
+              <polygon points="200,210 54,210 127,120" fill="#CBD4A9" opacity="0.35"/>
+              <polygon points="200,210 127,120 163,68" fill="#DDA785" opacity="0.3"/>
+              <polygon points="200,210 163,68 200,50" fill="#E0C48C" opacity="0.4"/>
+              <polygon points="200,210 200,50 237,68" fill="#DDA785" opacity="0.3"/>
+              <polygon points="200,210 237,68 273,120" fill="#CBD4A9" opacity="0.35"/>
+              <polygon points="200,210 273,120 346,210" fill="#A78998" opacity="0.3"/>
+              <circle cx="200" cy="210" r="46" fill="url(#centerGlow)"/>
+            </g>
+
+            <!-- lead lines -->
+            <g fill="none" stroke="#C7A05C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z"/>
+              <line x1="54" y1="210" x2="346" y2="210"/>
+              <line x1="127" y1="210" x2="127" y2="540"/>
+              <line x1="200" y1="210" x2="200" y2="540"/>
+              <line x1="273" y1="210" x2="273" y2="540"/>
+              <line x1="200" y1="210" x2="127" y2="120"/>
+              <line x1="200" y1="210" x2="163" y2="68"/>
+              <line x1="200" y1="210" x2="200" y2="50"/>
+              <line x1="200" y1="210" x2="237" y2="68"/>
+              <line x1="200" y1="210" x2="273" y2="120"/>
+            </g>
+
+            <!-- threshold -->
+            <g stroke="#C7A05C" stroke-width="1.6" opacity="0.55">
+              <line x1="70" y1="528" x2="330" y2="528"/>
+              <line x1="82" y1="536" x2="318" y2="536"/>
+            </g>
+
+            <!-- door ring handle -->
+            <circle cx="300" cy="360" r="9" fill="none" stroke="#C7A05C" stroke-width="3"/>
+            <line x1="300" y1="369" x2="300" y2="380" stroke="#C7A05C" stroke-width="3" stroke-linecap="round"/>
+
+            <!-- center jewel -->
+            <circle cx="200" cy="210" r="7" fill="#E0C48C" stroke="#C7A05C" stroke-width="1.4"/>
+
+            <!-- floral vine, left, mirrored to right via use -->
+            <g id="vineSrc" fill="none" stroke="#A6B37B" stroke-width="2" stroke-linecap="round">
+              <path d="M40,222 C10,192 16,144 52,118 C36,150 34,180 45,204"/>
+              <circle cx="52" cy="118" r="4" fill="#DDA785" stroke="none"/>
+              <circle cx="30" cy="160" r="3" fill="#C7A05C" stroke="none"/>
+              <circle cx="42" cy="200" r="3" fill="#CBD4A9" stroke="none"/>
+            </g>
+            <use href="#vineSrc" transform="translate(400,0) scale(-1,1)"/>
+
+            <!-- ambient sparkles -->
+            <g fill="#C7A05C">
+              <path d="M336,96 l4,11 11,4 -11,4 -4,11 -4,-11 -11,-4 11,-4 Z" opacity="0.85"/>
+              <path d="M66,470 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" opacity="0.7"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue">
+      <span>Scroll to Wander</span>
+      <span class="line"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOORS / CATEGORIES ============ -->
+<section class="section" id="ateliers">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Seven Doors, Seven Mediums</span>
+        <h2>Explore the Ateliers</h2>
+      </div>
+      <p>Each door opens onto a different medium of student craft — wander through as many as call to you.</p>
+    </div>
+
+    <div class="doors-grid">
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#CBD4A9"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#CBD4A9" opacity="0.28" stroke="#C7A05C" stroke-width="1.3"/>
+          <g fill="none" stroke="#3A2E38" stroke-width="2" stroke-linejoin="round"><rect x="23" y="38" width="28" height="20" rx="3"/><path d="M30,38 l3,-6 h8 l3,6"/><circle cx="37" cy="48" r="6"/></g>
+        </svg>
+        <h3>Photography</h3>
+        <p>Light caught mid-breath, framed and held still.</p>
+        <a href="gallery.html#photography" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#DDA785"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#DDA785" opacity="0.24" stroke="#C7A05C" stroke-width="1.3"/>
+          <path d="M37,34 l5,12 12,5 -12,5 -5,12 -5,-12 -12,-5 12,-5 Z" fill="#3A2E38"/>
+          <circle cx="24" cy="60" r="2.4" fill="#3A2E38"/><circle cx="50" cy="62" r="2" fill="#3A2E38"/>
+        </svg>
+        <h3>Digital &amp; AI Art</h3>
+        <p>Worlds conjured pixel by pixel, dream by dream.</p>
+        <a href="gallery.html#digital" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#A78998"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#A78998" opacity="0.24" stroke="#C7A05C" stroke-width="1.3"/>
+          <g stroke="#3A2E38" stroke-width="3" stroke-linecap="round"><line x1="26" y1="64" x2="26" y2="42"/><line x1="37" y1="64" x2="37" y2="34"/><line x1="48" y1="64" x2="48" y2="48"/></g>
+        </svg>
+        <h3>Music &amp; Sound</h3>
+        <p>Melodies that drift through the trees like fireflies.</p>
+        <a href="gallery.html#music" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#E0C48C"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#E0C48C" opacity="0.3" stroke="#C7A05C" stroke-width="1.3"/>
+          <g fill="none" stroke="#3A2E38" stroke-width="2"><rect x="22" y="36" width="30" height="24" rx="2"/><rect x="25" y="39" width="3" height="3"/><rect x="25" y="53" width="3" height="3"/><rect x="46" y="39" width="3" height="3"/><rect x="46" y="53" width="3" height="3"/></g>
+        </svg>
+        <h3>Film &amp; Motion</h3>
+        <p>Stories unspooled one flickering frame at a time.</p>
+        <a href="gallery.html#film" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#CBD4A9"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#CBD4A9" opacity="0.28" stroke="#C7A05C" stroke-width="1.3"/>
+          <path d="M48,32 C40,40 30,52 26,64" fill="none" stroke="#3A2E38" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M48,32 C44,34 40,40 38,44 M48,32 C46,38 42,42 39,48" fill="none" stroke="#3A2E38" stroke-width="1.3"/>
+          <circle cx="26" cy="64" r="1.6" fill="#3A2E38"/>
+        </svg>
+        <h3>Poetry &amp; Prose</h3>
+        <p>Words folded like petals, opened slowly to read.</p>
+        <a href="gallery.html#poetry" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#DDA785"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#DDA785" opacity="0.22" stroke="#C7A05C" stroke-width="1.3"/>
+          <polygon points="37,32 50,44 46,64 28,64 24,44" fill="none" stroke="#3A2E38" stroke-width="2"/>
+          <line x1="37" y1="32" x2="37" y2="64" stroke="#3A2E38" stroke-width="1.2"/><line x1="24" y1="44" x2="50" y2="44" stroke="#3A2E38" stroke-width="1.2"/>
+        </svg>
+        <h3>Sculpture &amp; Installation</h3>
+        <p>Form given to feeling, standing quiet in the room.</p>
+        <a href="gallery.html#sculpture" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="door-card reveal">
+        <span class="tag-dot" style="background:#A78998"></span>
+        <svg class="door-icon" viewBox="0 0 74 96"><path d="M10,92 L10,42 C10,20 24,8 37,8 C50,8 64,20 64,42 L64,92 Z" fill="#A78998" opacity="0.22" stroke="#C7A05C" stroke-width="1.3"/>
+          <path d="M22,58 C30,44 40,42 50,36" fill="none" stroke="#3A2E38" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="27" cy="61" rx="7" ry="4" fill="none" stroke="#3A2E38" stroke-width="1.6"/>
+          <circle cx="24" cy="60" r="1.3" fill="#3A2E38"/><circle cx="27" cy="63" r="1.3" fill="#3A2E38"/><circle cx="30" cy="60" r="1.3" fill="#3A2E38"/>
+        </svg>
+        <h3>Traditional Painting</h3>
+        <p>Pigment and patience, layered like autumn light.</p>
+        <a href="gallery.html#painting" class="enter">Enter <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTALLATIONS ============ -->
+<section class="section tinted">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">Glass · Four Seasons</span>
+        <h2>Featured Installations</h2>
+      </div>
+      <p>An art-nouveau-inspired glasswork series, one pane for every turn of the year.</p>
+    </div>
+    <div class="strip">
+      <div class="strip-card reveal" style="background:linear-gradient(200deg,#CBD4A9,#F1EADC 70%)">
+        <span>Spring — First Bloom</span>
+      </div>
+      <div class="strip-card reveal" style="background:linear-gradient(200deg,#E0C48C,#DDA785 70%)">
+        <span>Summer — Golden Hour</span>
+      </div>
+      <div class="strip-card reveal" style="background:linear-gradient(200deg,#C7885F,#A78998 70%)">
+        <span>Autumn — Amber Fall</span>
+      </div>
+      <div class="strip-card reveal" style="background:linear-gradient(200deg,#7C6072,#A6B37B 70%)">
+        <span>Winter — Quiet Frost</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ARTISTS ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <span class="eyebrow">The Hands Behind It</span>
+        <h2>Meet the Artists</h2>
+      </div>
+      <a href="artists.html" class="btn btn-ghost btn-sm">View All</a>
+    </div>
+    <div class="artist-row">
+      <div class="reveal">
+        <div class="artist-avatar" style="background:linear-gradient(150deg,#A78998,#7C6072)">IS</div>
+        <div class="artist-name">Irish Sabroso</div>
+        <div class="artist-role">Digital Art</div>
+      </div>
+      <div class="reveal">
+        <div class="artist-avatar" style="background:linear-gradient(150deg,#CBD4A9,#A6B37B)">KM</div>
+        <div class="artist-name">Krishna Mae</div>
+        <div class="artist-role">Poetry</div>
+      </div>
+      <div class="reveal">
+        <div class="artist-avatar" style="background:linear-gradient(150deg,#DDA785,#C7885F)">MD</div>
+        <div class="artist-name">Mikaela D.</div>
+        <div class="artist-role">Photography</div>
+      </div>
+      <div class="reveal">
+        <div class="artist-avatar" style="background:linear-gradient(150deg,#E0C48C,#DDA785)">AR</div>
+        <div class="artist-name">Angelica R.</div>
+        <div class="artist-role">Painting</div>
+      </div>
+      <div class="reveal">
+        <div class="artist-avatar" style="background:linear-gradient(150deg,#A6B37B,#7C6072)">GT</div>
+        <div class="artist-name">Gabrielle T.</div>
+        <div class="artist-role">Film &amp; Motion</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE / MOODBOARD ============ -->
+<section class="quote-block tinted reveal">
+  <div class="container">
+    <span class="eyebrow">Moodboard</span>
+    <p>“Art is the fairy dust<br>of the soul.”</p>
+    <div class="keyword-row">
+      <span>Enchanted</span><span>Fairycore</span><span>Art Nouveau</span><span>Magical</span><span>Imaginative</span><span>Romantic</span><span>Timeless</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section">
+  <div class="container">
+    <div class="cta-banner reveal">
+      <h2>Step through the door.</h2>
+      <a href="gallery.html" class="btn btn-primary">Begin Your Visit</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="word" style="font-family:var(--font-display);letter-spacing:.12em;color:var(--cream)">ADA</span>
+        <p>An Atelier of Destiny and Arts — a fairy-touched gallery for student work in every medium, built one stained-glass door at a time.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="artists.html">Artists</a>
+        <a href="about.html">About</a>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <a href="contact.html">Contact</a>
+        <a href="about.html#story">Our Story</a>
+        <a href="gallery.html">Submit Work</a>
+      </div>
+      <div>
+        <h4>Journal</h4>
+        <p>Sign up for gallery openings and new-door announcements.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ADA — An Atelier of Destiny and Arts. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Pinterest"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 17c1-3 1-7 1-9a2 2 0 1 1 4 0c0 1.5-1 3-1 5 0 1.5 1 2 2 1"/></svg></a>
+        <a href="contact.html" aria-label="Email"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
