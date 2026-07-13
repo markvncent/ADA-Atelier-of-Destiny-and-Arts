@@ -1338,3 +1338,61 @@ label {
 .category-body {
   background: transparent !important;
 }
+
+/* ═══════════════════════════════════════════════
+   CURATORIAL CARD TOOLTIP
+   ═══════════════════════════════════════════════ */
+
+.curatorial-card {
+  position: relative;
+}
+
+.curatorial-card .email-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--ink, #121915);
+  border: 1px solid var(--gold-soft);
+  color: var(--gold-soft);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-family: 'Poppins', sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  z-index: 20;
+}
+
+/* Arrow container border trick */
+.curatorial-card .email-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--ink, #121915) transparent transparent transparent;
+}
+
+.curatorial-card .email-tooltip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--gold-soft) transparent transparent transparent;
+  z-index: -1;
+  margin-top: 1px;
+}
+
+.curatorial-card:hover .email-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}

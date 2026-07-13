@@ -7,8 +7,95 @@ import ScrollRevealSection from '../components/ui/ScrollRevealSection.jsx';
 import { Carousel } from '../components/ui/retro-testimonial.jsx';
 import { motion } from 'framer-motion';
 import ConstellationBackground from '../components/ui/ConstellationBackground.jsx';
+import { getArtworksByCategory } from '../services/artworks.js';
+import { fallbackArtworks } from '../data/fallbackArtworks.js';
 
 const MotionLink = motion(Link);
+
+function CategoryThumbnailWindow({ categoryId, categorySlug, defaultCoverUrl, categoryName }) {
+  const [images, setImages] = useState([defaultCoverUrl]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    const fetchArtworks = async () => {
+      let artworks = [];
+      try {
+        artworks = await getArtworksByCategory(categoryId);
+      } catch (err) {
+        console.warn(`Failed to fetch artworks for category ${categorySlug}:`, err.message);
+      }
+
+      if (!artworks || artworks.length === 0) {
+        artworks = fallbackArtworks[categorySlug] || [];
+      }
+
+      if (!active) return;
+
+      const extractedImages = artworks
+        .map((art) => art.thumbnail_url || (art.media_type === 'image' ? art.media_url : null))
+        .filter((url) => !!url);
+
+      if (extractedImages.length > 0) {
+        // Limit to 6 preview images max
+        setImages(extractedImages.slice(0, 6));
+      }
+    };
+
+    fetchArtworks();
+    return () => {
+      active = false;
+    };
+  }, [categoryId, categorySlug, defaultCoverUrl]);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3500);
+
+    return () => clearInterval(interval);
+  }, [images]);
+
+  return (
+    <div
+      style={{
+        width: '180px',
+        height: '240px',
+        borderRadius: '90px 90px 16px 16px',
+        border: '3px solid rgba(75, 63, 51, 0.7)',
+        position: 'relative',
+        overflow: 'hidden',
+        flexShrink: 0,
+        boxShadow: '0 8px 24px rgba(58,46,56,0.15)',
+        background: 'var(--cream-deep)',
+      }}
+      className="z-10 flex items-center justify-center"
+    >
+      {images.map((imgUrl, idx) => (
+        <img
+          key={`${imgUrl}-${idx}`}
+          src={imgUrl}
+          alt={`${categoryName} preview`}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            borderRadius: '87px 87px 12px 12px',
+            filter: 'saturate(0.85) sepia(0.15)',
+            opacity: idx === currentImageIndex ? 1 : 0,
+            transform: categorySlug === 'ai-painting' ? 'scale(1.25)' : 'scale(1)',
+            transformOrigin: 'center center',
+            transition: 'opacity 1.2s ease-in-out, transform 1.2s ease-in-out',
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [renderedCategories, setRenderedCategories] = useState([]);
@@ -114,33 +201,13 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* Stained-Glass Window Frame housing the category picture */}
-          <div
-            style={{
-              width: '180px',
-              height: '240px',
-              borderRadius: '90px 90px 16px 16px',
-              border: '3px solid rgba(75, 63, 51, 0.7)',
-              position: 'relative',
-              overflow: 'hidden',
-              flexShrink: 0,
-              boxShadow: '0 8px 24px rgba(58,46,56,0.15)',
-              background: 'var(--cream-deep)',
-            }}
-            className="z-10 flex items-center justify-center"
-          >
-            <img
-              src={bgUrl}
-              alt={cat.name}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                borderRadius: '87px 87px 12px 12px',
-                filter: 'saturate(0.85) sepia(0.15)',
-              }}
-            />
-          </div>
+          {/* Stained-Glass Window Frame housing the category picture slider */}
+          <CategoryThumbnailWindow
+            categoryId={cat.id}
+            categorySlug={cat.slug}
+            defaultCoverUrl={bgUrl}
+            categoryName={cat.name}
+          />
 
           {/* Category Name (Header) */}
           <h3 className="text-[rgba(31,27,29,0.85)] text-lg md:text-xl font-semibold text-center mt-6 uppercase tracking-wider z-10">
@@ -167,9 +234,8 @@ export default function HomePage() {
             <div className="hero-copy">
               <span className="eyebrow hero-eyebrow">An Atelier of Destiny and Arts</span>
               <h1>
-                Where art<br />meets <em>imagination</em>.
+                Where creativity <em>blossoms,</em> and Destinies <em>unfold.</em>
               </h1>
-              <p className="tagline">Where Creativity Blossoms and Destinies Unfold</p>
               <p className="lede">
                 Step through five doors of a fairy-touched gallery, where stained glass holds the light
                 and every artwork waits with a story of its own to tell.

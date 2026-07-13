@@ -11,7 +11,7 @@ export default function Footer() {
         {isAboutPage ? (
           /* ─── About Page: Artist Bento Grid Footer ─── */
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {/* Artists Header */}
+            {/* Curators Header */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <span style={{ height: '1px', width: '32px', background: 'var(--gold-soft)' }} />
               <h4 style={{
@@ -21,48 +21,56 @@ export default function Footer() {
                 textTransform: 'uppercase',
                 color: 'var(--gold-soft)',
               }}>
-                Artists
+                Curatorial Guild
               </h4>
               <span style={{ height: '1px', flex: 1, background: 'rgba(251,247,239,0.14)' }} />
             </div>
 
-            {/* Artist Bento Grid */}
+            {/* Curators Centered Grid */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
               gap: '12px',
             }}>
               {[
-                { name: 'Achas, Kieth Lawrence', email: 's.achas.kiethlawrence@cmu.edu.ph' },
-                { name: 'Galleros, Kimberly', email: 's.galleros.kimberly@cmu.edu.ph' },
-                { name: 'Pañares, Frenche Jyne', email: 's.panares.frenchejyne@cmu.edu.ph' },
-                { name: 'Revilla, Cherlyn', email: 's.revillia.cherlyn@cmu.edu.ph' },
-                { name: 'Saballia, Clarence', email: 's.saballia.clarence@cmu.edu.ph' },
-                { name: 'Tan, Rodge Daniellette', email: 's.tan.rodgedaniellette@cmu.edu.ph' },
-              ].map((artist, idx) => (
-                <div
+                { name: 'Abriol, Earlimar Miechan', email: 's.abriol.earlimarmiechan@cmu.edu.ph' },
+                { name: 'Bastasa, Bam Angel', email: 's.bastasa.bamangel@cmu.edu.ph' },
+                { name: 'Beltran, Henzdyl', email: 's.beltran.henzdyl@cmu.edu.ph' },
+                { name: 'Cabañelez, Xandrex II', email: 's.cabanelez.xandrexii@cmu.edu.ph' },
+                { name: 'Nobleza, Finnea Zoe', email: 's.nobleza.finneazoe@cmu.edu.ph' },
+                { name: 'Paway, Kareen Claire', email: 's.paway.kareenclaire@cmu.edu.ph' },
+                { name: 'Sabroso, Irish Jeanne', email: 's.sabroso.irishjeanne@cmu.edu.ph' },
+              ].map((curator, idx) => (
+                <a
+                  href={`mailto:${curator.email}`}
                   key={idx}
-                  className="group"
+                  className="group curatorial-card"
                   style={{
                     position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    flex: '1 1 180px',
+                    maxWidth: '240px',
                     padding: '16px 12px',
                     border: '1px solid rgba(251,247,239,0.14)',
                     borderRadius: '12px',
                     textAlign: 'center',
-                    cursor: 'default',
-                    transition: 'background 0.3s, border-color 0.3s',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.background = 'rgba(199,160,92,0.12)';
                     e.currentTarget.style.borderColor = 'var(--gold-soft)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.background = 'transparent';
                     e.currentTarget.style.borderColor = 'rgba(251,247,239,0.14)';
+                    e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
                   <p style={{
@@ -72,9 +80,12 @@ export default function Footer() {
                     color: 'rgba(251,247,239,0.85)',
                     lineHeight: 1.4,
                   }}>
-                    {artist.name}
+                    {curator.name}
                   </p>
-                </div>
+                  <span className="email-tooltip">
+                    {curator.email}
+                  </span>
+                </a>
               ))}
             </div>
 
@@ -154,7 +165,7 @@ export default function Footer() {
                     e.currentTarget.style.background = 'transparent';
                   }}
                 >
-                  <span>Dashboard</span>
+                  <span>Admin Dashboard</span>
                   <span>&rarr;</span>
                 </Link>
               </div>
@@ -163,27 +174,6 @@ export default function Footer() {
             {/* Bottom Bar */}
             <div className="footer-bottom">
               <span>&copy; {currentYear} ADA — Atelier of Destiny and Arts. All rights reserved.</span>
-              <div className="footer-socials">
-                <a href="#" aria-label="Instagram">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <rect x="3" y="3" width="18" height="18" rx="5"/>
-                    <circle cx="12" cy="12" r="4"/>
-                    <circle cx="17.5" cy="6.5" r="1"/>
-                  </svg>
-                </a>
-                <a href="#" aria-label="Pinterest">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <circle cx="12" cy="12" r="9"/>
-                    <path d="M9 17c1-3 1-7 1-9a2 2 0 1 1 4 0c0 1.5-1 3-1 5 0 1.5 1 2 2 1"/>
-                  </svg>
-                </a>
-                <a href="/contact" aria-label="Email">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                    <rect x="3" y="5" width="18" height="14" rx="2"/>
-                    <path d="M3 7l9 6 9-6"/>
-                  </svg>
-                </a>
-              </div>
             </div>
           </>
         )}
