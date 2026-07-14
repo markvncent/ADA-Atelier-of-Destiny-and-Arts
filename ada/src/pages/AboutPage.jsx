@@ -2,6 +2,46 @@ import { useRef, useEffect } from 'react';
 import ScrollRevealSection from '../components/ui/ScrollRevealSection';
 import FairyDust from '../components/ui/FairyDust.jsx';
 
+const curatorPhotos = {
+  ABRIOL: "/assets/curators/ABRIOL, EARLIMAR MIECHAN_.jpg",
+  BASTASA: "/assets/curators/BASTASA, BAM ANGEL.png",
+  BELTRAN: "/assets/curators/BELTRAN, HENZDYL M..png",
+  CABANELEZ: "/assets/curators/CABAÑELEZ, XANDREX II C..jpeg",
+  NOBLEZA: "/assets/curators/NOBLEZA,FINNEA ZOE.PNG",
+  PAWAY: "/assets/curators/PAWAY, KAREEN CLAIRE.JPG",
+  SABROSO: "/assets/curators/SABROSO, IRISH JEANNE.png"
+};
+
+function CuratorPhotoFrame({ surname, photoUrl }) {
+  return (
+    <div
+      style={{
+        width: '150px',
+        height: '200px',
+        borderRadius: '75px 75px 12px 12px',
+        border: '3px solid rgba(75, 63, 51, 0.7)',
+        position: 'relative',
+        overflow: 'hidden',
+        flexShrink: 0,
+        boxShadow: '0 6px 18px rgba(58,46,56,0.12)',
+        background: 'var(--cream-deep)',
+      }}
+      className="flex items-center justify-center"
+    >
+      <img
+        src={photoUrl}
+        alt={`Photo of curator ${surname}`}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          filter: 'saturate(0.9) sepia(0.08)',
+        }}
+      />
+    </div>
+  );
+}
+
 export default function AboutPage() {
   const scrollContainerRef = useRef(null);
   const bgRef = useRef(null);
@@ -170,34 +210,50 @@ export default function AboutPage() {
 
         {/* Curators Section */}
         <div>
-          {curators.map((curator, idx) => (
-            <ScrollRevealSection key={idx}>
-              <div style={{
-                marginBottom: '40px',
-                paddingBottom: idx === curators.length - 1 ? '0' : '40px',
-                borderBottom: idx === curators.length - 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.05)',
-              }}>
-                <p style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: '0.94rem',
-                  lineHeight: 1.85,
-                  color: 'var(--ink-soft)',
-                  textAlign: 'justify',
+          {curators.map((curator, idx) => {
+            const photoUrl = curatorPhotos[curator.surname] || '';
+            const isEven = idx % 2 === 0;
+
+            return (
+              <ScrollRevealSection key={idx}>
+                <div style={{
+                  marginBottom: '48px',
+                  paddingBottom: idx === curators.length - 1 ? '0' : '48px',
+                  borderBottom: idx === curators.length - 1 ? 'none' : '1px solid rgba(0, 0, 0, 0.05)',
                 }}>
-                  <strong style={{
-                    fontFamily: "'Poppins', sans-serif",
-                    fontWeight: 700,
-                    color: 'var(--ink-soft)',
-                    marginRight: '8px',
-                    letterSpacing: '0.02em',
-                  }}>
-                    {curator.surname}:
-                  </strong>
-                  {curator.bio}
-                </p>
-              </div>
-            </ScrollRevealSection>
-          ))}
+                  <div className="block flow-root">
+                    {/* Frame containing the curator's picture */}
+                    {photoUrl && (
+                      <div className={`float-none ${isEven ? 'sm:float-left sm:mr-6' : 'sm:float-right sm:ml-6'} mb-4 sm:mb-2 flex justify-center sm:block`}>
+                        <CuratorPhotoFrame surname={curator.surname} photoUrl={photoUrl} />
+                      </div>
+                    )}
+                    
+                    {/* Biography block */}
+                    <p style={{
+                      fontFamily: "'Poppins', sans-serif",
+                      fontSize: '0.94rem',
+                      lineHeight: 1.85,
+                      color: 'var(--ink-soft)',
+                      textAlign: 'justify',
+                      margin: 0,
+                    }}>
+                      <strong style={{
+                        fontFamily: "'Poppins', sans-serif",
+                        fontWeight: 700,
+                        color: 'var(--ink-soft)',
+                        marginRight: '8px',
+                        letterSpacing: '0.02em',
+                      }}>
+                        {curator.surname}:
+                      </strong>
+                      {curator.bio}
+                    </p>
+                  </div>
+                </div>
+              </ScrollRevealSection>
+            );
+          })}
         </div>
       </div>
     </div>
