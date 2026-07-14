@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import categories from '../data/categoryConfig.js';
 import { getCategories } from '../services/categories.js';
@@ -9,8 +9,10 @@ import { motion } from 'framer-motion';
 import ConstellationBackground from '../components/ui/ConstellationBackground.jsx';
 import { getArtworksByCategory } from '../services/artworks.js';
 import { fallbackArtworks } from '../data/fallbackArtworks.js';
+import HeroCanvasBackground from '../components/ui/HeroCanvasBackground.jsx';
+import { CircularGallery } from '../components/ui/circular-gallery.jsx';
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 function CategoryThumbnailWindow({ categoryId, categorySlug, defaultCoverUrl, categoryName }) {
   const [images, setImages] = useState([defaultCoverUrl]);
@@ -99,6 +101,19 @@ function CategoryThumbnailWindow({ categoryId, categorySlug, defaultCoverUrl, ca
 
 export default function HomePage() {
   const [renderedCategories, setRenderedCategories] = useState([]);
+  const categoriesBgImgRef = useRef(null);
+
+  // Mouse interactiveness for categories section background parallax
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!categoriesBgImgRef.current) return;
+      const xOffset = ((e.clientX / window.innerWidth) - 0.5) * -25; // max 12.5px shift
+      const yOffset = ((e.clientY / window.innerHeight) - 0.5) * -25;
+      categoriesBgImgRef.current.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0)`;
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -173,8 +188,7 @@ export default function HomePage() {
         }}
       >
         <div
-          className={`${index % 2 === 0 ? "rotate-0" : "-rotate-0"} rounded-3xl bg-gradient-to-b from-[#f2f0eb] to-[#fff9eb] h-[500px] md:h-[550px] w-80 md:w-96 overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-md`}
-          style={{ padding: '32px 24px' }}
+          className={`${index % 2 === 0 ? "rotate-0" : "-rotate-0"} rounded-3xl bg-gradient-to-b from-[#f2f0eb] to-[#fff9eb] h-[370px] md:h-[400px] w-[240px] md:w-[260px] overflow-hidden flex flex-col items-center justify-center relative z-10 shadow-sm md:shadow-md p-3 md:p-5`}
         >
           {/* Paper Texture Background layer overlay */}
           <div className="absolute opacity-30" style={{ inset: "-1px 0 0" }}>
@@ -189,12 +203,12 @@ export default function HomePage() {
           {/* Miniature Stained Glass Window/Door Icon overlay at top-right */}
           <div style={{
             position: 'absolute',
-            top: '24px',
-            right: '24px',
+            top: '12px',
+            right: '12px',
             color: categoryColors[cat.slug] || '#E0C48C',
             zIndex: 10
           }} title={cat.name}>
-            <svg width="18" height="24" viewBox="0 0 40 50" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>
+            <svg width="14" height="20" viewBox="0 0 40 50" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}>
               <path d="M4,46 L4,18 C4,9 12,4 20,4 C28,4 36,9 36,18 L36,46 Z" />
               <line x1="20" y1="18" x2="20" y2="46" />
               <circle cx="20" cy="18" r="2" fill="currentColor" />
@@ -210,12 +224,12 @@ export default function HomePage() {
           />
 
           {/* Category Name (Header) */}
-          <h3 className="text-[rgba(31,27,29,0.85)] text-lg md:text-xl font-semibold text-center mt-6 uppercase tracking-wider z-10">
+          <h3 className="text-[rgba(31,27,29,0.85)] text-sm md:text-base font-semibold text-center mt-3 uppercase tracking-wider z-10">
             {cat.name}
           </h3>
 
-          {/* Description Quote (Smaller in size) */}
-          <p className="text-[rgba(31,27,29,0.65)] text-xs md:text-sm font-normal text-center [text-wrap:balance] mt-2 px-3 z-10 leading-relaxed italic">
+          {/* Description Quote */}
+          <p className="text-[rgba(31,27,29,0.65)] text-[10px] md:text-[11px] font-normal text-center [text-wrap:balance] mt-1 px-1 z-10 leading-normal italic">
             "{cat.description}"
           </p>
         </div>
@@ -226,125 +240,192 @@ export default function HomePage() {
   return (
     <div style={{ position: 'relative' }}>
       {/* ═══════ HERO — Enchanted Gateway ═══════ */}
-      <section className="hero" id="home">
-        <FairyDust count={14} />
-        <div className="hero-container">
-          <div className="hero-grid">
-            {/* Left: Copy */}
-            <div className="hero-copy">
-              <span className="eyebrow hero-eyebrow">An Atelier of Destiny and Arts</span>
-              <h1>
-                Where creativity <em>blossoms,</em> and Destinies <em>unfold.</em>
-              </h1>
-              <p className="lede">
-                Step through five doors of a fairy-touched gallery, where stained glass holds the light
-                and every artwork waits with a story of its own to tell.
-              </p>
-              <div className="hero-actions">
-                <a className="btn btn-primary" href="#categories">
-                  Enter the Gallery
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </a>
-                <Link className="link-quiet" to="/about">The story behind ADA →</Link>
-              </div>
-            </div>
+      <div className="hero-scroll-wrapper">
+        <section className="hero" id="home">
+          <HeroCanvasBackground />
+          {/* Top solid color fade overlay (mirror fade towards header/navigation) */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: 'linear-gradient(to bottom, var(--parchment) 0%, transparent 100%)',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }} />
 
-            {/* Right: Stained Glass Door Illustration */}
-            <div className="hero-art">
-              <div className="door-wrap">
-                <div className="glow-behind" />
-                <svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg" aria-label="An illustrated stained glass door, the emblem of ADA">
-                  <defs>
-                    <radialGradient id="doorGlow" cx="50%" cy="24%" r="80%">
-                      <stop offset="0%" stopColor="#F3E3BE" />
-                      <stop offset="42%" stopColor="#DDA785" />
-                      <stop offset="100%" stopColor="#7C6072" />
-                    </radialGradient>
-                    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#F3E3BE" stopOpacity="0.9" />
-                      <stop offset="100%" stopColor="#F3E3BE" stopOpacity="0" />
-                    </radialGradient>
-                    <clipPath id="doorClip">
+          {/* Bottom solid color fade overlay (smooth transition from Hero to Gallery) */}
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: '120px',
+            background: 'linear-gradient(to top, var(--parchment) 0%, transparent 100%)',
+            zIndex: 1,
+            pointerEvents: 'none',
+          }} />
+          <FairyDust count={36} />
+          <div className="hero-container">
+            <div className="hero-grid">
+              {/* Left: Copy */}
+              <div className="hero-copy">
+                <span className="eyebrow hero-eyebrow">An Atelier of Destiny and Arts</span>
+                <h1>
+                  Where creativity <em>blossoms,</em> and Destinies <em>unfold.</em>
+                </h1>
+                <p className="lede">
+                  Step through five doors of a fairy-touched gallery, where stained glass holds the light
+                  and every artwork waits with a story of its own to tell.
+                </p>
+                <div className="hero-actions">
+                  <a className="btn btn-primary" href="#categories">
+                    Enter the Gallery
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                  </a>
+                  <Link className="link-quiet" to="/about">The story behind ADA →</Link>
+                </div>
+              </div>
+
+              {/* Right: Stained Glass Door Illustration */}
+              <div className="hero-art">
+                <div className="door-wrap">
+                  <div className="glow-behind" />
+                  <svg viewBox="0 0 400 560" xmlns="http://www.w3.org/2000/svg" aria-label="An illustrated stained glass door, the emblem of ADA">
+                    <defs>
+                      <radialGradient id="doorGlow" cx="50%" cy="24%" r="80%">
+                        <stop offset="0%" stopColor="#F3E3BE" />
+                        <stop offset="42%" stopColor="#DDA785" />
+                        <stop offset="100%" stopColor="#7C6072" />
+                      </radialGradient>
+                      <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#F3E3BE" stopOpacity="0.9" />
+                        <stop offset="100%" stopColor="#F3E3BE" stopOpacity="0" />
+                      </radialGradient>
+                      <clipPath id="doorClip">
+                        <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z" />
+                      </clipPath>
+                    </defs>
+
+                    <g clipPath="url(#doorClip)">
+                      <rect x="0" y="0" width="400" height="560" fill="url(#doorGlow)" />
+                      {/* Vertical panel bands */}
+                      <rect x="54" y="0" width="73" height="560" fill="#CBD4A9" opacity="0.32" />
+                      <rect x="127" y="0" width="73" height="560" fill="#DDA785" opacity="0.22" />
+                      <rect x="200" y="0" width="73" height="560" fill="#A78998" opacity="0.26" />
+                      <rect x="273" y="0" width="73" height="560" fill="#A6B37B" opacity="0.26" />
+                      {/* Sunburst fan wedges */}
+                      <polygon points="200,210 54,210 127,120" fill="#CBD4A9" opacity="0.35" />
+                      <polygon points="200,210 127,120 163,68" fill="#DDA785" opacity="0.3" />
+                      <polygon points="200,210 163,68 200,50" fill="#E0C48C" opacity="0.4" />
+                      <polygon points="200,210 200,50 237,68" fill="#DDA785" opacity="0.3" />
+                      <polygon points="200,210 237,68 273,120" fill="#CBD4A9" opacity="0.35" />
+                      <polygon points="200,210 273,120 346,210" fill="#A78998" opacity="0.3" />
+                      <circle cx="200" cy="210" r="46" fill="url(#centerGlow)" />
+                    </g>
+
+                    {/* Lead lines */}
+                    <g fill="none" stroke="#C7A05C" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z" />
-                    </clipPath>
-                  </defs>
+                      <line x1="54" y1="210" x2="346" y2="210" />
+                      <line x1="127" y1="210" x2="127" y2="540" />
+                      <line x1="200" y1="210" x2="200" y2="540" />
+                      <line x1="273" y1="210" x2="273" y2="540" />
+                      <line x1="200" y1="210" x2="127" y2="120" />
+                      <line x1="200" y1="210" x2="163" y2="68" />
+                      <line x1="200" y1="210" x2="200" y2="50" />
+                      <line x1="200" y1="210" x2="237" y2="68" />
+                      <line x1="200" y1="210" x2="273" y2="120" />
+                    </g>
 
-                  <g clipPath="url(#doorClip)">
-                    <rect x="0" y="0" width="400" height="560" fill="url(#doorGlow)" />
-                    {/* Vertical panel bands */}
-                    <rect x="54" y="0" width="73" height="560" fill="#CBD4A9" opacity="0.32" />
-                    <rect x="127" y="0" width="73" height="560" fill="#DDA785" opacity="0.22" />
-                    <rect x="200" y="0" width="73" height="560" fill="#A78998" opacity="0.26" />
-                    <rect x="273" y="0" width="73" height="560" fill="#A6B37B" opacity="0.26" />
-                    {/* Sunburst fan wedges */}
-                    <polygon points="200,210 54,210 127,120" fill="#CBD4A9" opacity="0.35" />
-                    <polygon points="200,210 127,120 163,68" fill="#DDA785" opacity="0.3" />
-                    <polygon points="200,210 163,68 200,50" fill="#E0C48C" opacity="0.4" />
-                    <polygon points="200,210 200,50 237,68" fill="#DDA785" opacity="0.3" />
-                    <polygon points="200,210 237,68 273,120" fill="#CBD4A9" opacity="0.35" />
-                    <polygon points="200,210 273,120 346,210" fill="#A78998" opacity="0.3" />
-                    <circle cx="200" cy="210" r="46" fill="url(#centerGlow)" />
-                  </g>
+                    {/* Threshold */}
+                    <g stroke="#C7A05C" strokeWidth="1.6" opacity="0.55">
+                      <line x1="70" y1="528" x2="330" y2="528" />
+                      <line x1="82" y1="536" x2="318" y2="536" />
+                    </g>
 
-                  {/* Lead lines */}
-                  <g fill="none" stroke="#C7A05C" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M54,540 L54,210 C54,110 120,50 200,50 C280,50 346,110 346,210 L346,540 Z" />
-                    <line x1="54" y1="210" x2="346" y2="210" />
-                    <line x1="127" y1="210" x2="127" y2="540" />
-                    <line x1="200" y1="210" x2="200" y2="540" />
-                    <line x1="273" y1="210" x2="273" y2="540" />
-                    <line x1="200" y1="210" x2="127" y2="120" />
-                    <line x1="200" y1="210" x2="163" y2="68" />
-                    <line x1="200" y1="210" x2="200" y2="50" />
-                    <line x1="200" y1="210" x2="237" y2="68" />
-                    <line x1="200" y1="210" x2="273" y2="120" />
-                  </g>
+                    {/* Door ring handle */}
+                    <circle cx="300" cy="360" r="9" fill="none" stroke="#C7A05C" strokeWidth="3" />
+                    <line x1="300" y1="369" x2="300" y2="380" stroke="#C7A05C" strokeWidth="3" strokeLinecap="round" />
 
-                  {/* Threshold */}
-                  <g stroke="#C7A05C" strokeWidth="1.6" opacity="0.55">
-                    <line x1="70" y1="528" x2="330" y2="528" />
-                    <line x1="82" y1="536" x2="318" y2="536" />
-                  </g>
+                    {/* Center jewel */}
+                    <circle cx="200" cy="210" r="7" fill="#E0C48C" stroke="#C7A05C" strokeWidth="1.4" />
 
-                  {/* Door ring handle */}
-                  <circle cx="300" cy="360" r="9" fill="none" stroke="#C7A05C" strokeWidth="3" />
-                  <line x1="300" y1="369" x2="300" y2="380" stroke="#C7A05C" strokeWidth="3" strokeLinecap="round" />
+                    {/* Floral vine */}
+                    <g id="vineSrc" fill="none" stroke="#A6B37B" strokeWidth="2" strokeLinecap="round">
+                      <path d="M40,222 C10,192 16,144 52,118 C36,150 34,180 45,204" />
+                      <circle cx="52" cy="118" r="4" fill="#DDA785" stroke="none" />
+                      <circle cx="30" cy="160" r="3" fill="#C7A05C" stroke="none" />
+                      <circle cx="42" cy="200" r="3" fill="#CBD4A9" stroke="none" />
+                    </g>
+                    <use href="#vineSrc" transform="translate(400,0) scale(-1,1)" />
 
-                  {/* Center jewel */}
-                  <circle cx="200" cy="210" r="7" fill="#E0C48C" stroke="#C7A05C" strokeWidth="1.4" />
-
-                  {/* Floral vine */}
-                  <g id="vineSrc" fill="none" stroke="#A6B37B" strokeWidth="2" strokeLinecap="round">
-                    <path d="M40,222 C10,192 16,144 52,118 C36,150 34,180 45,204" />
-                    <circle cx="52" cy="118" r="4" fill="#DDA785" stroke="none" />
-                    <circle cx="30" cy="160" r="3" fill="#C7A05C" stroke="none" />
-                    <circle cx="42" cy="200" r="3" fill="#CBD4A9" stroke="none" />
-                  </g>
-                  <use href="#vineSrc" transform="translate(400,0) scale(-1,1)" />
-
-                  {/* Ambient sparkles */}
-                  <g fill="#C7A05C">
-                    <path d="M336,96 l4,11 11,4 -11,4 -4,11 -4,-11 -11,-4 11,-4 Z" opacity="0.85" />
-                    <path d="M66,470 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" opacity="0.7" />
-                  </g>
-                </svg>
+                    {/* Ambient sparkles */}
+                    <g fill="#C7A05C">
+                      <path d="M336,96 l4,11 11,4 -11,4 -4,11 -4,-11 -11,-4 11,-4 Z" opacity="0.85" />
+                      <path d="M66,470 l3,8 8,3 -8,3 -3,8 -3,-8 -8,-3 8,-3 Z" opacity="0.7" />
+                    </g>
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Scroll Cue */}
-          <div className="scroll-cue">
-            <span>Scroll to Wander</span>
-            <span className="line" />
+            {/* Scroll Cue */}
+            <div className="scroll-cue">
+              <span>Scroll to Wander</span>
+              <span className="line" />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* ═══════ ATELIERS — Category Door Cards ═══════ */}
       <section className="archive-section" id="categories" style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Interactive Parallax background image layer */}
+        <div
+          ref={categoriesBgImgRef}
+          style={{
+            position: 'absolute',
+            inset: '-30px', // allows translation shifting without exposing edges
+            zIndex: 0,
+            background: `
+              linear-gradient(to bottom, rgba(246, 239, 226, 0.45) 0%, rgba(246, 239, 226, 0.65) 100%),
+              url('/Header_bg-2.png') center/cover no-repeat
+            `,
+            opacity: 0.35, // Soften the background image visibility
+            pointerEvents: 'none',
+            transition: 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+          }}
+        />
+
+        {/* Top solid color fade overlay (smooth transition from Hero to Gallery) */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '120px',
+          background: 'linear-gradient(to bottom, var(--parchment) 0%, transparent 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
+
+        {/* Bottom solid color fade overlay (smooth transition from Gallery to About Teaser) */}
+        <div style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '120px',
+          background: 'linear-gradient(to top, var(--parchment) 0%, transparent 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }} />
         <ConstellationBackground />
+        <FairyDust count={36} />
         {/* Left background watermark constellation */}
         <svg width="240" height="340" viewBox="0 0 240 340" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', left: '2%', top: '15%', opacity: 0.08, pointerEvents: 'none', zIndex: 1 }} className="hidden lg:block">
           <path d="M40,280 L40,120 C40,60 80,30 120,30 C160,30 200,60 200,120 L200,280 Z" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
@@ -406,13 +487,13 @@ export default function HomePage() {
           </div>
 
           {/* Categories Carousel */}
-          <Carousel items={categoryCards} />
+          <CircularGallery items={categoryCards} />
         </div>
       </section>
 
       {/* ═══════ ABOUT TEASER ═══════ */}
       <section className="section" id="about-teaser">
-        <FairyDust count={16} />
+        <FairyDust count={28} />
         <div className="container">
           <ScrollRevealSection>
             <div style={{

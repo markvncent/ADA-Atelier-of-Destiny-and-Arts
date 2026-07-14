@@ -1,9 +1,32 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import ScrollRevealSection from '../components/ui/ScrollRevealSection';
 import FairyDust from '../components/ui/FairyDust.jsx';
 
 export default function AboutPage() {
   const scrollContainerRef = useRef(null);
+  const bgRef = useRef(null);
+  const bgImgRef = useRef(null);
+
+  // Mouse interactiveness for background parallax & glow
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Shift background image (opposite direction parallax)
+      if (bgImgRef.current) {
+        const xOffset = ((e.clientX / window.innerWidth) - 0.5) * -25; // max 12.5px shift
+        const yOffset = ((e.clientY / window.innerHeight) - 0.5) * -25;
+        bgImgRef.current.style.transform = `translate3d(${xOffset}px, ${yOffset}px, 0)`;
+      }
+
+      // Shift top radial glow
+      if (bgRef.current) {
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = Math.min(100, (e.clientY / 400) * 100);
+        bgRef.current.style.background = `radial-gradient(ellipse 60% 50% at ${x}% ${y}%, rgba(203,212,169,0.38), transparent 65%)`;
+      }
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const introductionParagraphs = [
     "Atelier of Destiny and Arts (ADA) is more than a virtual gallery—it is a place where creativity blooms and every artwork tells a story waiting to be discovered. Inspired by the elegance of Art Nouveau, the quiet magic of nature, and the belief that every person journeys through different seasons of life, ADA invites visitors into a world where imagination and emotion intertwine.",
@@ -43,18 +66,40 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="about-page-body" style={{ position: 'relative', minHeight: '100vh' }}>
+    <div className="about-page-body" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
+      {/* Interactive Parallax background image layer */}
+      <div 
+        ref={bgImgRef}
+        style={{
+          position: 'fixed',
+          inset: '-30px', // extra padding to allow translation shifting without showing white edges
+          zIndex: 0,
+          background: `
+            radial-gradient(ellipse 60% 45% at 18% 12%, rgba(203, 212, 169, 0.3), transparent 60%),
+            radial-gradient(ellipse 55% 50% at 88% 8%, rgba(221, 167, 133, 0.22), transparent 60%),
+            linear-gradient(to bottom, var(--cream) 0%, rgba(251, 247, 239, 0.4) 20%, transparent 70%),
+            url('/Header_bg-1.png') center/cover no-repeat
+          `,
+          opacity: 0.22,
+          pointerEvents: 'none',
+          transition: 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)',
+        }}
+      />
       <FairyDust count={28} />
       {/* Decorative gradient background */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '400px',
-        background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(203,212,169,0.35), transparent 65%)',
-        pointerEvents: 'none',
-      }} />
+      <div 
+        ref={bgRef}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '400px',
+          background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(203,212,169,0.35), transparent 65%)',
+          pointerEvents: 'none',
+          transition: 'background 0.15s ease-out',
+        }} 
+      />
 
       {/* Header */}
       <header className="page-hero">

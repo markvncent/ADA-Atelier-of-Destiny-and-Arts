@@ -475,6 +475,18 @@
    HERO — Enchanted Gateway
    ═══════════════════════════════════════════════ */
 
+/* ─── Sticky Pinning Wrapper for Hero (Desktop only) ─── */
+.hero-scroll-wrapper {
+  position: relative;
+  height: 220vh; /* Scrollable height to play the background frame progression */
+}
+
+@media (max-width: 900px) {
+  .hero-scroll-wrapper {
+    height: auto; /* Fallback to normal layout on smaller viewports */
+  }
+}
+
 .hero {
   position: relative;
   min-height: 90vh;
@@ -484,6 +496,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 901px) {
+  .hero-scroll-wrapper .hero {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    min-height: 100vh;
+    padding: 0;
+  }
 }
 
 .hero-container {
@@ -820,20 +842,14 @@
    ═══════════════════════════════════════════════ */
 
 .archive-section {
-  background-color: var(--parchment);
+  background: 
+    linear-gradient(to bottom, rgba(246, 239, 226, 0.45) 0%, rgba(246, 239, 226, 0.65) 100%),
+    url('/Header_bg-2.png') center/cover no-repeat;
   padding: 88px 24px;
   position: relative;
 }
 
-.archive-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--sage), var(--gold), var(--peach), var(--mauve));
-}
+
 
 .divider {
   display: flex;
@@ -1333,10 +1349,21 @@ label {
   z-index: 2;
 }
 
-#about-teaser,
 .about-page-body,
 .category-body {
   background: transparent !important;
+}
+
+#about-teaser {
+  background: var(--parchment) !important;
+}
+
+.site-main:has(.about-page-body)::before {
+  opacity: 0 !important;
+}
+
+#categories {
+  background: var(--parchment) !important;
 }
 
 /* ═══════════════════════════════════════════════
